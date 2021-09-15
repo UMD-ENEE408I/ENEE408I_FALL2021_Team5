@@ -18,8 +18,8 @@ const unsigned int M2_I_SENSE = A0;
 
 const float M_I_COUNTS_TO_A = (3.3 / 1024.0) / 0.120;
 
-const unsigned int PWM_VALUE = 100;
-
+unsigned int PWM_M1_VALUE = 150;
+unsigned int PWM_M2_VALUE = 150;
 
 void setup() {
   Serial.begin(115200);
@@ -37,13 +37,13 @@ void setup() {
 
 //Motor Function
 void M1_backward() {
-  analogWrite(M1_IN_1, PWM_VALUE);
+  analogWrite(M1_IN_1, PWM_M1_VALUE);
   analogWrite(M1_IN_2, 0);
 }
 
 void M1_forward() {
   analogWrite(M1_IN_1, 0);
-  analogWrite(M1_IN_2, 200);
+  analogWrite(M1_IN_2, PWM_M1_VALUE);
 }
 
 void M1_stop() {
@@ -52,13 +52,13 @@ void M1_stop() {
 }
 
 void M2_backward() {
-  analogWrite(M2_IN_1, PWM_VALUE);
+  analogWrite(M2_IN_1, PWM_M2_VALUE);
   analogWrite(M2_IN_2, 0);
 }
 
 void M2_forward() {
   analogWrite(M2_IN_1, 0);
-  analogWrite(M2_IN_2, 255);
+  analogWrite(M2_IN_2, PWM_M1_VALUE);
 }
 
 void M2_stop() {
@@ -88,12 +88,41 @@ void loop() {
     M1_stop();
     M2_stop();
   }
-  else{
+  else if((adc1_buf[3] < 650) && ((adc2_buf[2] - adc2_buf[3]) > 50)){
     //left sensor of middle is adc2_buf[2]
     //left sensor of middle is adc2_buf[3]
+    if(PWM_M1_VALUE > 50){
+     PWM_M1_VALUE = PWM_M1_VALUE - 1;
+     M1_forward();
+     M2_forward();
+    }
+    else{
+       PWM_M2_VALUE = PWM_M2_VALUE + 1;
+       M1_forward();
+       M2_forward();
+    }  
+   }
+  
+  else if(((adc1_buf[3]) < 650) && ((adc2_buf[3] - adc2_buf[2]) > 50)){
+
+    if(PWM_M2_VALUE>50){
+    //left sensor of middle is adc2_buf[2]
+    //left sensor of middle is adc2_buf[3]
+    PWM_M2_VALUE = PWM_M2_VALUE - 1;
+    M1_forward();
+    M2_forward();
+    }
+    else{
+    PWM_M1_VALUE = PWM_M1_VALUE+1;
+    M1_forward();
+    M2_forward();
+    }
+  }
+  else{ 
     M1_forward();
     M2_forward();
   }
+  
 
   Serial.print(t_end - t_start);
   Serial.println();
