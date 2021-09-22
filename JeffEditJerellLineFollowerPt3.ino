@@ -172,33 +172,47 @@ void loop() {
     else if((isWhite(adc2_buf[3])) || (isWhite(adc2_buf[4])) || (isWhite(adc2_buf[5]) < 680) || (isWhite(adc1_buf[4])) || (isWhite(adc1_buf[5])) || (isWhite(adc1_buf[6])))) {
     //left sensor of middle is adc2_buf[2]
     //left sensor of middle is adc2_buf[3]
-//    if(PWM_M1_VALUE > 50){
-//     PWM_M1_VALUE = PWM_M1_VALUE - 1;
-//     M1_forward();
-//     M2_forward();
-//    }
-//    else{
-//       PWM_M2_VALUE = PWM_M2_VALUE + 3;
-//       M1_forward();
-//       M2_forward();
-//    }  
-
         if( PWM_M2_VALUE > 240 ) {
           M1_forward(PWM_M1_VALUE - 2);
-           //PWM_M1_VALUE = PWM_M1_VALUE - 2;
         }
         M2_forward(PWM_M2_VALUE + 2);
-        //PWM_M2_VALUE = PWM_M2_VALUE + 2;
         
-       // PWM_M1_VALUE = PWM_M1_VALUE - 1;
         M2_forward(PWM_M2_VALUE);
-       // M1_forward();
-   }
-   
-  }
+     }
+     else if((isWhite(adc2_buf[0])) || (isWhite(adc2_buf[1])) || (isWhite(adc2_buf[2])) || (isWhite(adc1_buf[0])) || (isWhite(adc1_buf[1])) || (isWhite(adc1_buf[2]))) {
   
+          //PWM_M2_VALUE = PWM_M2_VALUE - 1 ;
+          if(PWM_M1_VALUE > 240 ) {
+            M1_forward(PWM_M1_VALUE - 2);
+          }
+          M1_forward(PWM_M1_VALUE + 1);
+          M1_forward(PWM_M1_VALUE);
+          M2_forward(PWM_M2_VALUE);
+    }
+    else{ 
+      mouse_stop();
+    }
+    delay(10);
+    M1_stop();
+    M2_stop();
+
+  
+
+    Serial.print(t_end - t_start);
+    Serial.println();
+
+    delay(50);   
+  }
+  else {
+    Serial.print("end of TAKE ACTION BASED ON WHEREABOUTS");
+    mouse_stop();
+  }
+
+} //end void loop
+
 //___________________________________________________________________  
 
+/*
 //  if ((adc1_buf[3]) > 680){
 //    M1_stop();
 //    M2_stop();
@@ -272,4 +286,4 @@ void loop() {
   Serial.println();
 
   delay(50);
-}
+}*/
