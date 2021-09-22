@@ -8,7 +8,8 @@
 Adafruit_MCP3008 adc1;
 Adafruit_MCP3008 adc2;
 
-const unsigned int BLACK = 650;
+//const unsigned int BLACK = 650;
+const unsigned int BLACK = 680;
 
 bool atIntersection = false;
 bool onWhiteLine = false;
@@ -129,8 +130,11 @@ void loop() {
   int t_end = micros();
 
   for (int i = 0; i < 8; i++) {
-   Serial.print("adc1-"); Serial.print(i);Serial.print("-"); Serial.print(adc1_buf[i]); Serial.print("\t");
-   Serial.print("adc2-"); Serial.print(i);Serial.print("-"); Serial.print(adc2_buf[i]); Serial.print("\t");
+    //Serial.print(adc1_buf[i]); Serial.print("\t");
+    //Serial.print(adc2_buf[i]); Serial.print("\t");
+    
+   //Serial.print("adc1-"); Serial.print(i);Serial.print("-"); Serial.print(adc1_buf[i]); Serial.print("\t");
+   //Serial.print("adc2-"); Serial.print(i);Serial.print("-"); Serial.print(adc2_buf[i]); Serial.print("\t");
   }
 
 
@@ -166,28 +170,36 @@ void loop() {
   }
   //Move forward if on white line and not at intersection
   else if (onWhiteLine && !atIntersection) {
-    if (isWhite(adc1_buf[3])) {
+    if ((isWhite(adc1_buf[3])) || (isWhite(adc2_buf[2])) || (isWhite(adc2_buf[3]))) {
       mouse_forward(215, 215);
     }
     else if((isWhite(adc2_buf[3])) || (isWhite(adc2_buf[4])) || (isWhite(adc2_buf[5])) || (isWhite(adc1_buf[4])) || (isWhite(adc1_buf[5])) || (isWhite(adc1_buf[6]))) {
     //left sensor of middle is adc2_buf[2]
     //left sensor of middle is adc2_buf[3]
         if( PWM_M2_VALUE > 240 ) {
-          M1_forward(PWM_M1_VALUE - 2);
+          //M1_forward(PWM_M1_VALUE - 2);
+          PWM_M1_VALUE = PWM_M1_VALUE -2;
         }
-        M2_forward(PWM_M2_VALUE + 2);
-        
-        M2_forward(PWM_M2_VALUE);
+        //else {
+          M2_forward(PWM_M2_VALUE + 2); //changed from +2 to +4 //removed
+          //M1_forward(PWM_M1_VALUE - 4); //added //changed from -2 to -4
+        //}        
+        //M2_forward(PWM_M2_VALUE);
+        //M1_forward(PWM_M1_VALUE); //added
      }
      else if((isWhite(adc2_buf[0])) || (isWhite(adc2_buf[1])) || (isWhite(adc2_buf[2])) || (isWhite(adc1_buf[0])) || (isWhite(adc1_buf[1])) || (isWhite(adc1_buf[2]))) {
   
           //PWM_M2_VALUE = PWM_M2_VALUE - 1 ;
           if(PWM_M1_VALUE > 240 ) {
-            M1_forward(PWM_M1_VALUE - 2);
+            //M2_forward(PWM_M2_VALUE - 2);
+              PWM_M2_VALUE = PWM_M2_VALUE -2;
+
           }
-          M1_forward(PWM_M1_VALUE + 1);
-          M1_forward(PWM_M1_VALUE);
-          M2_forward(PWM_M2_VALUE);
+          //else {
+            M1_forward(PWM_M1_VALUE + 2); //changed from +1 to +2 //removed
+          //}
+          //M1_forward(PWM_M1_VALUE);
+          //M2_forward(PWM_M2_VALUE);
     }
     else{ 
       mouse_stop();
@@ -196,17 +208,26 @@ void loop() {
     M1_stop();
     M2_stop();
 
-  
+    //Serial.print(t_end - t_start);
+    /*Serial.print("atIntersection:");
+    Serial.print(atIntersection);
+    Serial.print("\t");
+    Serial.print("onWhiteLine:");
+    Serial.print(onWhiteLine);
+    Serial.println();*/
 
-    Serial.print(t_end - t_start);
-    Serial.println();
-
-    delay(50);   
+    delay(60);   //changed from 30 to 60
   }
   else {
     Serial.print("end of TAKE ACTION BASED ON WHEREABOUTS");
     mouse_stop();
   }
+    Serial.print("atIntersection:");
+    Serial.print(atIntersection);
+    Serial.print("\t");
+    Serial.print("onWhiteLine:");
+    Serial.print(onWhiteLine);
+    Serial.println();
 
 } //end void loop
 
