@@ -117,6 +117,18 @@ void mouse_stop() {
   M1_stop();
   M2_stop();
 }
+void mouse_left() {
+  M2_forward(215);
+  M1_backward(215);
+  delay(25);
+  mouse_stop();
+}
+void mouse_right() {
+  M1_forward(215);
+  M2_backward(215);
+  delay(25);
+  mouse_stop();
+}
 
 void loop() {
   int adc1_buf[8];
@@ -167,6 +179,10 @@ void loop() {
   else if (atIntersection == true) {
     mouse_stop();
     //HANDLE INTERSECTION
+    //mouse_left();
+    mouse_right();
+    Serial.print("turned");
+    delay(100);
   }
   //Move forward if on white line and not at intersection
   else if (onWhiteLine && !atIntersection) {
@@ -201,7 +217,7 @@ void loop() {
           //M1_forward(PWM_M1_VALUE);
           //M2_forward(PWM_M2_VALUE);
     }
-    else{ 
+    else { 
       mouse_stop();
     }
     delay(10);
