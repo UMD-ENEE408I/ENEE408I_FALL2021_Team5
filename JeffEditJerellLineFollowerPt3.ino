@@ -11,6 +11,8 @@ Adafruit_MCP3008 adc2;
 //const unsigned int BLACK = 650;
 const unsigned int BLACK = 680;
 
+bool atRight = false;
+bool atLeft = false;
 bool atIntersection = false;
 bool onWhiteLine = false;
 
@@ -170,6 +172,21 @@ void loop() {
     atIntersection = false;
   }
 
+  //At Left Turn
+  if ((isWhite(adc2_buf[0])) && (isWhite(adc1_buf[1])) && (isWhite(adc2_buf[1])) && (isWhite(adc1_buf[2])) && (isWhite(adc2_buf[2])) && (isWhite(adc1_buf[3]))) {
+    atRight = true;
+  }
+   else {
+    atRight = false; 
+  }
+  //At Right Turn
+   if ((isWhite(adc2_buf[3])) && (isWhite(adc1_buf[4])) && (isWhite(adc2_buf[4])) && (isWhite(adc1_buf[5])) && (isWhite(adc2_buf[5])) && (isWhite(adc1_buf[6]))) {
+    atLeft = true;
+   }
+   else { 
+    atLeft = false; 
+   }
+
   //____________________TAKE ACTION BASED ON WHEREABOUTS___________________________________
   //Stop if completely off the white line
   if (onWhiteLine == false) {
@@ -184,6 +201,24 @@ void loop() {
     Serial.print("turned");
     delay(100);
   }
+  else if (atRight == true){ 
+    mouse_stop();
+    //HANDLE INTERSECTION
+    //mouse_left();
+    mouse_right();
+    Serial.print("turned right");
+    delay(100);
+  }
+
+    else if (atLeft == true){ 
+    mouse_stop();
+    //HANDLE INTERSECTION
+    mouse_left();
+    //mouse_right();
+    Serial.print("turned right");
+    delay(100);
+  }
+    
   //Move forward if on white line and not at intersection
   else if (onWhiteLine && !atIntersection) {
     if ((isWhite(adc1_buf[3])) || (isWhite(adc2_buf[2])) || (isWhite(adc2_buf[3]))) {
@@ -273,7 +308,6 @@ void loop() {
 //       M1_forward();
 //       M2_forward();
 //    }  
-
         if( PWM_M2_VALUE > 240 ){
            PWM_M1_VALUE = PWM_M1_VALUE - 2;
         }
@@ -285,7 +319,6 @@ void loop() {
    }
   
   else if((adc2_buf[0] < 680  || adc2_buf[1] < 680 || adc2_buf[2] < 680 || adc1_buf[0] < 680 || adc1_buf[1] < 680  || adc1_buf[2] < 680 )){
-
 //    if(PWM_M2_VALUE>50){
 //    //left sensor of middle is adc2_buf[2]
 //    //left sensor of middle is adc2_buf[3]
@@ -298,7 +331,6 @@ void loop() {
 //    M1_forward();
 //    M2_forward();
 //    }
-
         //PWM_M2_VALUE = PWM_M2_VALUE - 1 ;
         if( PWM_M1_VALUE > 240 ){
            PWM_M1_VALUE = PWM_M1_VALUE - 2;
@@ -312,15 +344,11 @@ void loop() {
     M2_stop();
   }
   
-
     delay(10);
     M1_stop();
     M2_stop();
-
   
-
   Serial.print(t_end - t_start);
   Serial.println();
-
   delay(50);
 }*/
