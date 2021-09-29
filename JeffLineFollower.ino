@@ -154,17 +154,41 @@ void mouse_stop() {
   M1_stop();
   M2_stop();
 }
-void mouse_left() {
+void mouse_left(int del) {
   M2_forward(215);
   M1_backward(215);
-  delay(25);
+  delay(del);
   mouse_stop();
 }
-void mouse_right() {
+void mouse_right(int del) {
   M1_forward(215);
   M2_backward(215);
-  delay(25);
+  delay(del);
   mouse_stop();
+}
+void veer_left(int power, int del) {
+  M2_forward(power);
+  M1_backward(power);
+  delay(del);
+}
+void veer_right(int power, int del) {
+  M1_forward(power);
+  M2_backward(power);
+  delay(del);
+}
+
+/*
+ * Returns whether or not rover sees intersection
+ * 
+ * If 5 or more sensors sees white it is at an intersection
+ * 
+ * bool atIntersection = isVeeringTowards(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
+ */
+bool isAtIntersection(int val1, int val2, int val3, int val4, int val5, int val6, int val7, int val8, int val9, int val10, int val11, int val12, int val13) {
+    if (isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9)) {
+      return true;
+    }
+    return false;
 }
 
 /*
@@ -237,8 +261,10 @@ void moveCourseCorrect(int direction) {
   if (direction == -5) {
     //M2_forward(PWM_M2_VALUE + 10);
     //M1_forward(PWM_M1_VALUE - 10);
-    M2_forward(minOf(PWM_M2_VALUE + 1, 100));
-    M1_forward(maxOf(PWM_M1_VALUE - 1, 10));
+    
+    //M2_forward(minOf(PWM_M2_VALUE + 1, 100));
+    //M1_forward(maxOf(PWM_M1_VALUE - 1, 10));
+    veer_right(20, 5);
   }
   else if (direction == -4) {
     //M2_forward(PWM_M2_VALUE + 8);
@@ -291,8 +317,10 @@ void moveCourseCorrect(int direction) {
   else if (direction == 5) {
     //M1_forward(PWM_M1_VALUE + 10);
     //M2_forward(PWM_M2_VALUE - 10);
-    M1_forward(minOf(PWM_M1_VALUE + 1, 100));
-    M2_forward(maxOf(PWM_M2_VALUE - 1, 10));
+    
+    //M1_forward(minOf(PWM_M1_VALUE + 1, 100));
+    //M2_forward(maxOf(PWM_M2_VALUE - 1, 10));
+    veer_left(20, 5);
   }
   else {
     mouse_forward(FULL_SPEED_FORWARD, FULL_SPEED_FORWARD);
@@ -372,14 +400,14 @@ void loop() {
     mouse_stop();
     //HANDLE INTERSECTION
     //mouse_left();
-    mouse_right();
+    mouse_right(25);
     Serial.print("turned right");
     delay(100);
   }
   else if (atLeft == true){ 
     mouse_stop();
     //HANDLE INTERSECTION
-    mouse_left();
+    mouse_left(25);
     //mouse_right();
     Serial.print("turned right");
     delay(100);
