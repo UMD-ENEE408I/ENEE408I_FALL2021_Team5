@@ -1,15 +1,19 @@
 #include <Adafruit_MCP3008.h>
 
 /*
- * Jerell Line follower with intersection detection.
- * Last edited 09/22/21
+ * PID Line follower
+ * Last edited 10/1/21 1:31 PM
+ * 
+ * Notes:
+ * Works well with line following.
+ * Need to add Jack's reverse
  */
 
 Adafruit_MCP3008 adc1;
 Adafruit_MCP3008 adc2;
 
 //Jerell's mouse = 215
-const unsigned int FULL_SPEED_FORWARD = 35;
+const unsigned int FULL_SPEED_FORWARD = 30;
 
 //const unsigned int BLACK = 650;
 const unsigned int BLACK = 680;
@@ -20,6 +24,7 @@ bool atLeft = false;
 bool atIntersection = false;
 bool onWhiteLine = false;
 
+int BUZZ = 10;
 
 
 //ADC Intigers
@@ -168,41 +173,11 @@ void M1_forward(int x) {
     PWM_M1_VALUE = x;
     analogWrite(M1_IN_1, 0);
     analogWrite(M1_IN_2, x);
-  /*if (x > 253) {
-    PWM_M1_VALUE = FULL_SPEED_FORWARD;
-    analogWrite(M1_IN_1, 0);
-    analogWrite(M1_IN_2, FULL_SPEED_FORWARD);
-  }
-  else if (x < 3) {
-    PWM_M1_VALUE = FULL_SPEED_FORWARD;
-    analogWrite(M1_IN_1, 0);
-    analogWrite(M1_IN_2, FULL_SPEED_FORWARD);
-  }
-  else {
-    PWM_M1_VALUE = x;
-    analogWrite(M1_IN_1, 0);
-    analogWrite(M1_IN_2, x);
-  }*/
 }
 void M2_forward(int x) {
   PWM_M2_VALUE = x;
   analogWrite(M2_IN_1, 0);
   analogWrite(M2_IN_2, x);
-  /*if (x > 253) {
-    PWM_M2_VALUE = FULL_SPEED_FORWARD;
-    analogWrite(M2_IN_1, 0);
-    analogWrite(M2_IN_2, FULL_SPEED_FORWARD);
-  }
-  else if (x < 3) {
-    PWM_M2_VALUE = FULL_SPEED_FORWARD;
-    analogWrite(M2_IN_1, 0);
-    analogWrite(M2_IN_2, FULL_SPEED_FORWARD);
-  }
-  else {
-    PWM_M2_VALUE = x;
-    analogWrite(M2_IN_1, 0);
-    analogWrite(M2_IN_2, x);
-  }*/
 }
 void M1_backward(int x) {
   PWM_M1_VALUE = x;
@@ -257,31 +232,40 @@ void veer_right(int power, int del) {
  * bool atIntersection = isVeeringTowards(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
  */
 bool isAtIntersection(int val1, int val2, int val3, int val4, int val5, int val6, int val7, int val8, int val9, int val10, int val11, int val12, int val13) {
-    if (isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9)) {
+    //if (isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9)) {
+    if (isWhite(val1) && isWhite(val2) && isWhite(val3) && isWhite(val4) && isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9) && isWhite(val10) && isWhite(val11) && isWhite(val12) && isWhite(val13)) {
       return true;
     }
     return false;
 }
 
-
+/*
+ * Returns whether or not rover sees a right turn.
+ * 
+ * bool atRight = isAtRight(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
+ */
+bool isAtRight(int val1, int val2, int val3, int val4, int val5, int val6, int val7, int val8, int val9, int val10, int val11, int val12, int val13) {
+    //if (isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9)) {
+    if (isWhite(val1) && isWhite(val2) && isWhite(val3) && isWhite(val4) && isWhite(val5) && isWhite(val6)
+          && !isWhite(val8) && !isWhite(val9) && !isWhite(val10) && !isWhite(val11) && !isWhite(val12) && !isWhite(val13)) {
+      return true;
+    }
+    return false;
+}
 
 /*
- * Returns the maximum of two integers
+ * Returns whether or not rover sees a left turn.
+ * 
+ * bool atLeft = isAtLeft(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
  */
- int maxOf(int x, int y) {
-  if (x > y) return x;
-  return y;
- }
-
- /*
-  * Returns the minimum of two integers
-  */
-  int minOf(int x, int y) {
-    if (x < y) return x;
-    return y;
-  }
-
-
+bool isAtLeft(int val1, int val2, int val3, int val4, int val5, int val6, int val7, int val8, int val9, int val10, int val11, int val12, int val13) {
+    //if (isWhite(val5) && isWhite(val6) && isWhite(val7) && isWhite(val8) && isWhite(val9)) {
+    if (isWhite(val8) && isWhite(val9) && isWhite(val10) && isWhite(val11) && isWhite(val12) && isWhite(val13)
+        && !isWhite(val1) && !isWhite(val2) && !isWhite(val3) && !isWhite(val4) && !isWhite(val5) && !isWhite(val6)) {
+      return true;
+    }
+    return false;
+}
 
 void loop() {
   int adc1_buf[8];
@@ -314,29 +298,34 @@ void loop() {
   }
   
   //Detects full white T-intersection
+  atIntersection = isAtIntersection(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
+
+  
   /*adc1_buf[0] (farthest right sensor) does not go below 650 
   to detect white line. All other sensors work properly.*/
-  if ((isWhite(adc2_buf[0])) && (isWhite(adc1_buf[1])) && (isWhite(adc2_buf[1])) && (isWhite(adc1_buf[2])) && (isWhite(adc2_buf[2])) && (isWhite(adc1_buf[3])) && (isWhite(adc2_buf[3])) && (isWhite(adc1_buf[4])) && (isWhite(adc2_buf[4])) && (isWhite(adc1_buf[5])) && (isWhite(adc2_buf[5])) && (isWhite(adc1_buf[6]))) {
+  /*if ((isWhite(adc2_buf[0])) && (isWhite(adc1_buf[1])) && (isWhite(adc2_buf[1])) && (isWhite(adc1_buf[2])) && (isWhite(adc2_buf[2])) && (isWhite(adc1_buf[3])) && (isWhite(adc2_buf[3])) && (isWhite(adc1_buf[4])) && (isWhite(adc2_buf[4])) && (isWhite(adc1_buf[5])) && (isWhite(adc2_buf[5])) && (isWhite(adc1_buf[6]))) {
     atIntersection = true;
   }
   else {
     atIntersection = false;
-  }
+  }*/
 
   //At Left Turn
-  if ((isWhite(adc2_buf[0])) && (isWhite(adc1_buf[1])) && (isWhite(adc2_buf[1])) && (isWhite(adc1_buf[2])) && (isWhite(adc2_buf[2])) && (isWhite(adc1_buf[3]))) {
+  atLeft = isAtLeft(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
+  /*if ((isWhite(adc2_buf[0])) && (isWhite(adc1_buf[1])) && (isWhite(adc2_buf[1])) && (isWhite(adc1_buf[2])) && (isWhite(adc2_buf[2])) && (isWhite(adc1_buf[3]))) {
     atRight = true;
   }
    else {
     atRight = false; 
-  }
+  }*/
   //At Right Turn
-   if ((isWhite(adc2_buf[3])) && (isWhite(adc1_buf[4])) && (isWhite(adc2_buf[4])) && (isWhite(adc1_buf[5])) && (isWhite(adc2_buf[5])) && (isWhite(adc1_buf[6]))) {
+  atRight = isAtRight(adc1_buf[0], adc2_buf[0], adc1_buf[1], adc2_buf[1], adc1_buf[2], adc2_buf[2], adc1_buf[3], adc2_buf[3], adc1_buf[4], adc2_buf[4], adc1_buf[5], adc2_buf[5], adc1_buf[6]);
+   /*if ((isWhite(adc2_buf[3])) && (isWhite(adc1_buf[4])) && (isWhite(adc2_buf[4])) && (isWhite(adc1_buf[5])) && (isWhite(adc2_buf[5])) && (isWhite(adc1_buf[6]))) {
     atLeft = true;
    }
    else { 
     atLeft = false; 
-   }
+   }*/
 
   //____________________TAKE ACTION BASED ON WHEREABOUTS___________________________________
   //Stop if completely off the white line
@@ -346,6 +335,12 @@ void loop() {
   //Stop if at an intersection MUST IMPLEMENT HANDLE INTERSECTION
   else if (atIntersection == true) {
     mouse_stop();
+    delay(1000);
+    
+    for (int i = 0; i < 4; i++) {
+      tone(BUZZ, 3000+(i*200), 100);
+      delay(100);
+    }
     //HANDLE INTERSECTION
     //mouse_left();
     //mouse_right();
@@ -354,6 +349,12 @@ void loop() {
   }
   else if (atRight == true) { 
     mouse_stop();
+    
+    for (int i = 4; i > 0; i--) {
+      tone(BUZZ, 3000+(i*200), 100);
+      delay(100);
+    }
+    
     //HANDLE INTERSECTION
     //mouse_left();
     mouse_right(25);
@@ -362,6 +363,11 @@ void loop() {
   }
   else if (atLeft == true){ 
     mouse_stop();
+
+    for (int i = 4; i > 0; i--) {
+      tone(BUZZ, 3000+(i*200), 100);
+      delay(100);
+    }
     //HANDLE INTERSECTION
     mouse_left(25);
     //mouse_right();
