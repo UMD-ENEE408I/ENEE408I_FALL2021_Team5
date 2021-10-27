@@ -297,8 +297,10 @@ void connectToCentral() {
 
 void loop() {
 
-  connectToCentral(); //BLE test
+  while (1) {
+    connectToCentral(); //BLE test
   //testBLE(10);
+  }
   
   int adc1_buf[8];
   int adc2_buf[8];
