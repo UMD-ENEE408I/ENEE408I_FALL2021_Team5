@@ -98,6 +98,7 @@ void connectToCentral() {
 }
 
 void loop() {
+  BLE.poll();
   connectToCentral();
   
 }
