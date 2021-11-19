@@ -53,7 +53,7 @@ char Direction = 'N';    //Initial Direction will always be assumed to be North
 //////////////////////////////////////////////////////////////////////////////////////
 
 //Forward
-const unsigned int FULL_SPEED_FORWARD = 37;
+const unsigned int FULL_SPEED_FORWARD = 38;
 
  //Buzz
  const unsigned int BUZZ = 10;
@@ -443,16 +443,15 @@ void mouse_stop() {
 void mouse_left() {
    M2_forward(40);
    M1_backward(40);
-   delay(200);
+   delay(150);
    do {
-     M2_forward(40);
-     M1_backward(40);
-     delay(5);
+     M2_forward(70);
+     M1_backward(80);
+     delay(40);
      mouse_stop();
-    // t_start = micros();
+     delay(200);
      ADCRead(); 
-    // t_end = micros();
-      } while (!isWhite(adc1_buf[3])); //while (!isWhite(adc1_buf[3]) || !isWhite(adc2_buf[3]));
+      } while (!isWhite(adc1_buf[2])); //while (!isWhite(adc1_buf[3]) || !isWhite(adc2_buf[3]));
  //Move Forward After
      //Move Forward After
      P = 0;
@@ -475,14 +474,15 @@ void mouse_left() {
 void mouse_right() {
   M1_forward(40);
   M2_backward(40);
-  delay(200);
+  delay(150);
   do {
-    M1_forward(40);
-    M2_backward(40);
-    delay(5);
+    M1_forward(70);
+    M2_backward(80);
+    delay(40);
     mouse_stop();
+    delay(200);
     ADCRead(); 
-  } while (!isWhite(adc1_buf[3])); //while (!isWhite(adc1_buf[3]) || !isWhite(adc2_buf[3]));
+  } while (!isWhite(adc2_buf[3])); //while (!isWhite(adc1_buf[3]) || !isWhite(adc2_buf[3]));
  //Move Forward After
            P = 0;
            I = 0;
@@ -575,7 +575,7 @@ void loop() {
 
     //Move Forward
     mouse_forward(40,45);
-    delay(300);
+    delay(350);
     mouse_stop();
     delay(1000);
     mouse_right(); 
@@ -610,7 +610,7 @@ void loop() {
     }    
     //Move Forward
     mouse_forward(40,45);
-    delay(300);
+    delay(350);
     mouse_stop();
     ADCRead(); 
     if(isWhite(adc1_buf[2]) || isWhite(adc1_buf[3]) || isWhite(adc2_buf[3])){ 
@@ -647,7 +647,7 @@ void loop() {
          enc_set = false;
          //Move Forward
          mouse_forward(40,45);
-         delay(300);
+         delay(350);
          mouse_stop();
          ADCRead(); 
          if(isWhite(adc1_buf[2]) || isWhite(adc1_buf[3]) || isWhite(adc2_buf[3])){ 
@@ -709,7 +709,7 @@ void loop() {
      } else {
          //Move Forward
          mouse_forward(40,45);
-         delay(300);
+         delay(350);
          mouse_stop();
          ADCRead(); 
          if(isWhite(adc1_buf[2]) || isWhite(adc1_buf[3]) || isWhite(adc2_buf[3])){ 
