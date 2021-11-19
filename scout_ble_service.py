@@ -15,7 +15,7 @@ COUNTER_CHAR_UUID = "19d10001-e8f2-537e-4f6c-d104768a1214"
 
 async def run(address):
     async with BleakClient(address) as client:
-        counter_val = 0
+        """counter_val = 0
 
         t_start = time.time()
         await client.write_gatt_char(COUNTER_CHAR_UUID, struct.pack('hh', counter_val))
@@ -24,8 +24,9 @@ async def run(address):
         counter_val = struct.unpack('hh', value)
         print("counter: {}".format(counter_val))
         t_end = time.time()
+        """
 
-        """ left_value = -15
+        left_value = -15
         right_value = -20
 
         t_start = time.time()
@@ -40,7 +41,7 @@ async def run(address):
             right_value += 1
         t_end = time.time()
 
-        print('{} Hz'.format(40*2 / (t_end-t_start))) """
+        print('{} Hz'.format(40*2 / (t_end-t_start)))
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run(address))
