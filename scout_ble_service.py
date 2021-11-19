@@ -6,8 +6,8 @@ import time
 #to import from git to jetson use:
 # $ wget github/raw/url/link/thing
 
-address = "50:C7:CA:6F:7A:4F"
-#address = "3A:A8:FE:D9:13:BE"
+#address = "50:C7:CA:6F:7A:4F"
+address = "3A:A8:FE:D9:13:BE"
 MOTOR_CHAR_UUID = "0fe79935-cd39-480a-8a44-06b70f36f249"
 
 SCOUT_SERVICE_UUID = "19d10000-e8f2-537e-4f6c-d104768a1214"
