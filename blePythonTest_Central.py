@@ -3,6 +3,9 @@ from bleak import BleakClient
 import struct
 import time
 
+from bleak import BleakScanner
+from bleak import discover
+
 async def run():
     global RED, GREEN, BLUE
     print('ProtoStax Arduino Nano BLE LED Peripheral Central Service')
