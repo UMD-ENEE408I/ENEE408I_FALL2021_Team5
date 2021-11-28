@@ -4,7 +4,7 @@ import struct
 import time
 
 from bleak import BleakScanner
-from bleak import discover
+#from bleak import discover
 
 async def run():
     global RED, GREEN, BLUE
