@@ -82,6 +82,36 @@ async def setColor(client):
         await client.write_gatt_char(BLUE_LED_UUID, getValue(BLUE))
     
 
+def decode(val):
+    toReturn = ""
+    #check mouse mode
+    if (val & 0B10000000 == 0B10000000):
+        toReturn += "atExit\t"
+    else: toReturn += "!atExit\t"
+    if (val & 0B01000000 == 0B01000000):
+        toReturn += "atDeadEnd\t"
+    else: toReturn += "!atDeadEnd\t"
+    if (val & 0B00100000 == 0B00100000):
+        toReturn += "isForward\t"
+    else: toReturn += "!isForward\t"
+    if (val & 0B00010000 == 0B00010000):
+        toReturn += "atLeft\t"
+    else: toReturn += "!atLeft\t"
+    if (val & 0B00001000 == 0B00001000):
+        toReturn += "atRight\t"
+    else: toReturn += "!atRight\t"
+    if (val & 0B00000100 == 0B00000100):
+        toReturn += "atIntersection\t"
+    else: toReturn += "!atIntersection\t"
+    if (val & 0B00000010 == 0B00000010):
+        toReturn += "onWhiteLine\t"
+    else: toReturn += "!onWhiteLine\t"
+    if (val & 0B00000001 == 0B00000001):
+        toReturn += "MODE: FOLLOWING\n"
+    else: toReturn += "MODE: SCOUT\n"
+    return toReturn
+
+
 async def run():
 
     print('SCOUT MASTER Central Service')
@@ -97,7 +127,7 @@ async def run():
                 print(f'Connected to {d.address}')
                 while True:
                     val = int.from_bytes(await client.read_gatt_char(SCOUT_SERVICE_CHAR_UUID), "little")
-                    print(val)
+                    print(decode(val))
                     
 
     if not found:
