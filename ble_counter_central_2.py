@@ -97,7 +97,7 @@ async def run():
                 print(f'Connected to {d.address}')
                 while True:
                     val = int.from_bytes(await client.read_gatt_char(SCOUT_SERVICE_CHAR_UUID), "little")
-                    print(val)
+                    print(int.from_bytes(val))
                     
 
     if not found:
