@@ -37,6 +37,7 @@ import logging
 import asyncio
 import platform
 import ast
+import signal
 
 from bleak import BleakClient
 from bleak import BleakScanner
@@ -103,13 +104,22 @@ async def run():
         print('Could not find SCOUT1')
 
 
+def my_handler():
+    print('Stopping')
+    for task in asyncio.Task.all_tasks():
+        task.cancel()
+
 
 loop = asyncio.get_event_loop()
+loop.add_signal_handler(signal.SIGINT, my_handler)
 try:
     loop.run_until_complete(run())
     #loop.run_forever()
     #tasks = Task.all_tasks()
-except KeyboardInterrupt:
-    print('\nReceived Keyboard Interrupt')
+except asyncio.CancelledError:
+    print('Tasks have been cancelled')
+#except KeyboardInterrupt:
+    #print('\nReceived Keyboard Interrupt')
 finally:
+    loop.close()
     print('Program finished')
