@@ -62,7 +62,7 @@ Encoder enc2(M2_ENC_A, M2_ENC_B);
 
 bool enc_set = false;
 const int MAZE_UNIT_LENGTH = 270; //was 1080 //270 after a straight section
-const int ENCODER_ERROR_BOUND = 20;
+const int ENCODER_ERROR_BOUND = 30;
 int MADE_TURN_DISTANCE = 0; //Reduces distance becuase we just turned
 
 ///////////////////////////////////////////////
@@ -85,13 +85,13 @@ char MazeMap[100][100][8];
   7: Is this Node the Exit: T = True, F = False
   */
 
-int MazeX = 0;  //Initial X Position for the MazeMap is the Center
-int MazeY = 100;  //Initial Y Position for the MazeMap is the Center
+int MazeX = 5;  //Initial X Position for the MazeMap is the Center
+int MazeY = 5;  //Initial Y Position for the MazeMap is the Center
 char Direction = 'N';    //Initial Direction will always be assumed to be North
 //////////////////////////////////////////////////////////////////////////////////////
 
 //Forward
-const unsigned int FULL_SPEED_FORWARD = 36; //Set to 37 to start
+const unsigned int FULL_SPEED_FORWARD = 35; //Set to 37 to start
 
  //Buzz
  const unsigned int BUZZ = 10;
@@ -100,7 +100,7 @@ Adafruit_MCP3008 adc1;
 Adafruit_MCP3008 adc2;
 
 //const unsigned int BLACK = 650;
-const int BLACK = 683;  
+const int BLACK = 682;  
 
 //Booleans 
 bool atRight = false;
@@ -216,12 +216,12 @@ int distanceTravelled(int enc_start, int enc_end) {
 bool travelledUnitLength(int enc1, int enc2) {
   bool enc1_travelled_unit_length = false;
   bool enc2_travelled_unit_length = false;
-  if (distanceTravelled(enc1_start, enc1) > MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE - ENCODER_ERROR_BOUND
-        && distanceTravelled(enc1_start, enc1) < MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE  + ENCODER_ERROR_BOUND) {
+  if (distanceTravelled(enc1_start, enc1) > (MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE - ENCODER_ERROR_BOUND)
+        && distanceTravelled(enc1_start, enc1) < (MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE  + ENCODER_ERROR_BOUND)) {
           enc1_travelled_unit_length = true;
   }
-  if (distanceTravelled(enc2_start, enc2) > MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE - ENCODER_ERROR_BOUND
-        && distanceTravelled(enc2_start, enc2) < MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE + ENCODER_ERROR_BOUND) {
+  if (distanceTravelled(enc2_start, enc2) > (MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE - ENCODER_ERROR_BOUND)
+        && distanceTravelled(enc2_start, enc2) < (MAZE_UNIT_LENGTH - MADE_TURN_DISTANCE + ENCODER_ERROR_BOUND)) {
           enc2_travelled_unit_length = true;
   }
   return (enc1_travelled_unit_length && enc2_travelled_unit_length); //if both travelled unit length return true
