@@ -36,7 +36,7 @@ XPOS_CHAR_UUID = '19d10003-e8f2-537e-4f6c-d104768a1214'
 YPOS_CHAR_UUID = '19d10004-e8f2-537e-4f6c-d104768a1214'
 
 scout1_init = False
-DEBUG_PRINT_STATUS = True # print out the status every time
+DEBUG_PRINT_STATUS = False # print out the status every time
 scout1_curr_command = 0B00000000
 
 on_value = bytearray([0x01])
