@@ -27,11 +27,7 @@ from enum import Enum
 # These values have been randomly generated - they must match between the Central and Peripheral devices
 # Any changes you make here must be suitably made in the Arduino program as well
 
-RED_LED_UUID = '13012F01-F8C3-4F4A-A8F4-15CD926DA146'
-GREEN_LED_UUID = '13012F02-F8C3-4F4A-A8F4-15CD926DA146'
-BLUE_LED_UUID = '13012F03-F8C3-4F4A-A8F4-15CD926DA146'
-
-STATUS_CHAR_UUID = '19d10001-e8f2-537e-4f6c-d104768a1214'
+#STATUS_CHAR_UUID = '19d10001-e8f2-537e-4f6c-d104768a1214'
 COMMAND_CHAR_UUID = '19d10002-e8f2-537e-4f6c-d104768a1214'
 XPOS_CHAR_UUID = '19d10003-e8f2-537e-4f6c-d104768a1214'
 YPOS_CHAR_UUID = '19d10004-e8f2-537e-4f6c-d104768a1214'
@@ -300,9 +296,9 @@ async def run():
                         scout1_init = True """
 
                     # always decode status
-                    status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
-                    if (DEBUG_PRINT_STATUS):
-                        print(status_decode(status_val))
+                    #status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
+                    #if (DEBUG_PRINT_STATUS):
+                        #print(status_decode(status_val))
 
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
