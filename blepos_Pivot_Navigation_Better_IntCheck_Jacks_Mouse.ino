@@ -267,7 +267,7 @@ void setup() {
     ble_init = false;
     BLE.advertise();
     delay(100);
-    Serial.println("Scout1 Peripheral Service Started");
+    Serial.println("Scout2 Peripheral Service Started");
 
     
     
