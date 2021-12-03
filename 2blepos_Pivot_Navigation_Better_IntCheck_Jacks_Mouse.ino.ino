@@ -44,12 +44,14 @@ const char* commandCharacteristicUuid = "19d10002-e8f2-537e-4f6c-d104768a1214";
 const char* xposCharacteristicUuid = "19d10003-e8f2-537e-4f6c-d104768a1214";
 const char* yposCharacteristicUuid = "19d10004-e8f2-537e-4f6c-d104768a1214";
 const char* directionCharacteristicUuid = "19d10005-e8f2-537e-4f6c-d104768a1214";
+const char* mappingCharacteristicUuid = "19d10005-e8f2-537e-4f6c-d104768a1214";
 
 BLEService scoutService(scoutServiceUuid); // BLE Service
 BLEByteCharacteristic statusCharacteristic(scoutServiceCharacteristicUuid, BLERead | BLEWrite | BLENotify);
 BLEByteCharacteristic xposCharacteristic(xposCharacteristicUuid, BLERead | BLEWrite | BLENotify);
 BLEByteCharacteristic yposCharacteristic(yposCharacteristicUuid, BLERead | BLEWrite | BLENotify);
 BLEByteCharacteristic directionCharacteristic(directionCharacteristicUuid, BLERead | BLEWrite | BLENotify);
+BLEByteCharacteristic mappingCharacteristic(mappingCharacteristicUuid, BLERead | BLEWrite | BLENotify);
 
 //______________________________END BLUETOOTH________________________________ 
 
@@ -261,6 +263,7 @@ void setup() {
     scoutService.addCharacteristic(xposCharacteristic);
     scoutService.addCharacteristic(yposCharacteristic);
     scoutService.addCharacteristic(directionCharacteristic);
+    scoutService.addCharacteristic(mappingCharacteristic);
 
     //add service
     BLE.addService(scoutService);
@@ -343,9 +346,37 @@ void sendPosition() {
   else {
     directionCharacteristic.writeValue(0x11);
   }
-
-  directionCharacteristic.writeValue((byte) Direction);
 }
+
+void sendMapping() {
+  /*byte toSend = B00000000;
+  if (isScout) {
+    toSend = toSend | B00000001;
+  }
+  if (onWhiteLine) {
+    toSend = toSend | B00000010;
+  }
+  if (atIntersection) {
+    toSend = toSend | B00000100;
+  }
+  if (atRight) {
+    toSend = toSend | B00001000;
+  }
+  if (atLeft) {
+    toSend = toSend | B00010000;
+  }
+  if (IsForward) {
+    toSend = toSend | B00100000;
+  }
+  if (atDeadEnd) {
+    toSend = toSend | B01000000;
+  }
+  if (atExit) {
+    toSend = toSend | B10000000;
+  }
+  statusCharacteristic.writeValue(toSend); */
+}
+
 
 void MazeMapping(int* MazeX, int* MazeY, char Direction, bool atIntersection, bool atRight, bool atLeft, bool atExit, bool travelledUnitLength, bool IsForward, bool atDeadEnd){
   /*  Meaning of Third array parameter (May need Adjustment Eventually)
