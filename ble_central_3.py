@@ -181,14 +181,14 @@ def status_decode(val):
     else: toReturn += "MODE: SCOUT\n"
     return toReturn
 
-def pos_decode(xpos, ypos, direction):
+def pos_decode(xpos, ypos, dir):
 
     
     toReturn = "FACE: "
 
     if (DEBUG_POS_DECODE_DIRECTION):
         toReturn += "DEBUG: FACE_VAL_RECEIVED = "
-        toReturn += str(direction)
+        toReturn += str(dir)
         toReturn += "\t"
 
         #toReturn += str(direction)
@@ -218,7 +218,7 @@ def pos_decode(xpos, ypos, direction):
     MazeY = ypos
 
     global Direction
-    Direction = direction
+    Direction = dir
 
     return toReturn
 
