@@ -130,12 +130,12 @@ async def run():
                 while True:
 
                     # issue initial mode to peripheral ONCE
-                    if (not scout1_init):
+                    """ if (not scout1_init):
                         scout1_curr_command = encode_command(Command.SET_MODE_SCOUT)
                         await client.write_gatt_char(COMMAND_CHAR_UUID, scout1_curr_command, False)
                         print("set mode scout")
                         scout1_is_command_issued = True
-                        scout1_init = True
+                        scout1_init = True """
 
                     # always decode status
                     val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
