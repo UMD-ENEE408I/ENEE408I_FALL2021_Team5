@@ -143,8 +143,8 @@ async def run():
                         print(status_decode(val))
 
                     # always decode position
-                    xpos = await client.read_gatt_char(XPOS_CHAR_UUID)
-                    ypos = await client.read_gatt_char(YPOS_CHAR_UUID)
+                    xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
+                    ypos = int.from_bytes(await client.read_gatt_char(YPOS_CHAR_UUID), "little")
                     print(pos_decode(xpos, ypos))
 
                     # check if scout1 performed command
