@@ -57,13 +57,16 @@ atDeadEnd = False
 
 #__________________________________JACK'S MAZE MAPPING___________________
 
+MazeMap =[["X" for i in range (ROW)] for i in range (COL)]
+MazeMap[MazeX][MazeY] = "S"
+
 def mapTheMaze():
 
     global MazeX
     global MazeY
 
-    MazeMap =[["X" for i in range (ROW)] for i in range (COL)]
-    MazeMap[MazeX][MazeY] = "S"
+    #MazeMap =[["X" for i in range (ROW)] for i in range (COL)]
+    #MazeMap[MazeX][MazeY] = "S"
 
     #Adjust X and Y Coordinates to the new posiotion
     if (Direction == 0):
