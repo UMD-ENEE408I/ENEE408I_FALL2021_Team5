@@ -93,11 +93,11 @@ def pos_decode(xpos, ypos, direction):
         toReturn += str(direction)
         toReturn += "\t"
 
-    if (int.from_bytes(bytes(direction), "little") == 0):
+    if (direction == bytearray([int(0x00, 16)])):
         toReturn += "N\t"
-    elif (int.from_bytes(bytes(direction), "little") == 1):
+    elif (direction == bytearray([int(0x01, 16)])):
         toReturn += "S\t"
-    elif (int.from_bytes(bytes(direction), "little") == 16):
+    elif (direction == bytearray([int(0x10, 16)])):
         toReturn += "E\t"
     else: 
         toReturn += "W\t"
@@ -114,7 +114,14 @@ def pos_decode(xpos, ypos, direction):
     return toReturn
 
     
-
+"""  if (int.from_bytes(bytes(direction), "little") == 0):
+        toReturn += "N\t"
+    elif (int.from_bytes(bytes(direction), "little") == 1):
+        toReturn += "S\t"
+    elif (int.from_bytes(bytes(direction), "little") == 16):
+        toReturn += "E\t"
+    else: 
+        toReturn += "W\t" """
 
 # Returns whether or not the command has been executed by the peripheral
 # The left-most bit 
