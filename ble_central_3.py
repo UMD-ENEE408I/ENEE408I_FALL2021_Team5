@@ -311,8 +311,8 @@ async def run():
                     print(pos_decode(xpos, ypos, direction))
 
                     # always decode mapping characteristic
-                    mapping_val = int.from_bytes(await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
-                    mapping_decode(mapping_val)
+                    #mapping_val = int.from_bytes(await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
+                    #mapping_decode(mapping_val)
 
                     # check if scout1 performed command
                     """ if (scout1_is_command_issued):
@@ -325,7 +325,7 @@ async def run():
                     # send instruction on condition
 
                     #
-                    mapTheMaze()
+                    #mapTheMaze()
                     
 
     if not found:
