@@ -93,11 +93,11 @@ def pos_decode(xpos, ypos, direction):
         toReturn += str(direction)
         toReturn += "\t"
 
-    if (direction == 0x00):
+    if (direction & 0x00 == 0x00):
         toReturn += "N\t"
-    elif (direction == 0x01):
+    elif (direction & 0x01 == 0x01):
         toReturn += "S\t"
-    elif (direction == 0x10):
+    elif (direction & 0x10 == 0x10):
         toReturn += "E\t"
     else: toReturn += "W\t"
 
