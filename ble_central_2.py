@@ -38,6 +38,7 @@ DIRECTION_CHAR_UUID = '19d10005-e8f2-537e-4f6c-d104768a1214'
 
 scout1_init = False
 DEBUG_PRINT_STATUS = False # print out the status every time
+DEBUG_POS_DECODE_DIRECTION = True
 scout1_curr_command = 0B00000000
 
 on_value = bytearray([0x01])
@@ -86,6 +87,11 @@ def pos_decode(xpos, ypos, direction):
 
     
     toReturn = "FACE: "
+
+    if (DEBUG_POS_DECODE_DIRECTION):
+        toReturn += str(direction)
+        toReturn += "\t"
+
     if (direction == 0x00):
         toReturn += "N\t"
     elif (direction == 0x01):
