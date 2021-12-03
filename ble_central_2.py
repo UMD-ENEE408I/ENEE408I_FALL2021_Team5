@@ -89,6 +89,7 @@ def pos_decode(xpos, ypos, direction):
     toReturn = "FACE: "
 
     if (DEBUG_POS_DECODE_DIRECTION):
+        toReturn += "DEBUG: FACE_VAL_RECEIVED = "
         toReturn += str(direction)
         toReturn += "\t"
 
