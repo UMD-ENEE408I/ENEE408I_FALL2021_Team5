@@ -34,6 +34,7 @@ STATUS_CHAR_UUID = '19d10001-e8f2-537e-4f6c-d104768a1214'
 COMMAND_CHAR_UUID = '19d10002-e8f2-537e-4f6c-d104768a1214'
 XPOS_CHAR_UUID = '19d10003-e8f2-537e-4f6c-d104768a1214'
 YPOS_CHAR_UUID = '19d10004-e8f2-537e-4f6c-d104768a1214'
+DIRECTION_CHAR_UUID = '19d10005-e8f2-537e-4f6c-d104768a1214'
 
 scout1_init = False
 DEBUG_PRINT_STATUS = False # print out the status every time
@@ -81,18 +82,22 @@ def status_decode(val):
     else: toReturn += "MODE: SCOUT\n"
     return toReturn
 
-def pos_decode(xpos, ypos):
+def pos_decode(xpos, ypos, direction):
+
+    
     toReturn = "FACE: "
-    if (xpos & 0B00000000 == 0B00000000):
+    toReturn += str(direction)
+
+    """ if (xpos & 0B00000000 == 0B00000000):
         toReturn += "N\t"
     elif (xpos & 0B01000000 == 0B01000000):
         toReturn += "S\t"
     elif (xpos & 0B10000000 == 0B10000000):
         toReturn += "E\t"
-    else: toReturn += "W\t"
+    else: toReturn += "W\t" """
 
     toReturn += "xpos: "
-    xpos = xpos | 0B000000
+    #xpos = xpos | 0B000000
     toReturn += str(xpos) #int.from_bytes(xpos)
     toReturn += "\t"
 
@@ -145,7 +150,8 @@ async def run():
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
                     ypos = int.from_bytes(await client.read_gatt_char(YPOS_CHAR_UUID), "little")
-                    print(pos_decode(xpos, ypos))
+                    direction = int.from_bytes(await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
+                    print(pos_decode(xpos, ypos, direction))
 
                     # check if scout1 performed command
                     """ if (scout1_is_command_issued):
