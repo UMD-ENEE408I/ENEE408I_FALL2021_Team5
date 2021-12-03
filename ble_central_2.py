@@ -122,7 +122,7 @@ async def run():
     found = False
     devices = await discover()
     for d in devices:       
-        if 'SCOUT2'in d.name:
+        if 'SCOUT1'in d.name:
             print('Found SCOUT1 Peripheral')
             found = True
             async with BleakClient(d.address) as client:
