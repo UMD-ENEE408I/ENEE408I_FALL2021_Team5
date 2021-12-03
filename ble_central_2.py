@@ -93,11 +93,11 @@ def pos_decode(xpos, ypos):
 
     toReturn += "xpos: "
     xpos = xpos | 0B000000
-    toReturn += xpos #int.from_bytes(xpos)
+    toReturn += str(xpos) #int.from_bytes(xpos)
     toReturn += "\t"
 
     toReturn += "ypos: "
-    toReturn += int.from_bytes(ypos)
+    toReturn += str(ypos) #int.from_bytes(ypos)
 
     return toReturn
 
