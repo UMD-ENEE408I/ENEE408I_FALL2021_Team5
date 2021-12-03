@@ -148,11 +148,11 @@ async def run():
                     print(pos_decode(xpos, ypos))
 
                     # check if scout1 performed command
-                    if (scout1_is_command_issued):
+                    """ if (scout1_is_command_issued):
                         val = await client.read_gatt_char(COMMAND_CHAR_UUID, "little")
                         if (is_command_executed(val)):
                             scout1_is_command_issued = False
-
+ """
                     # 
                     
                     # send instruction on condition
