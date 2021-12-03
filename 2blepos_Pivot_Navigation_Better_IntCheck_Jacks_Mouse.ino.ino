@@ -44,7 +44,7 @@ const char* commandCharacteristicUuid = "19d10002-e8f2-537e-4f6c-d104768a1214";
 const char* xposCharacteristicUuid = "19d10003-e8f2-537e-4f6c-d104768a1214";
 const char* yposCharacteristicUuid = "19d10004-e8f2-537e-4f6c-d104768a1214";
 const char* directionCharacteristicUuid = "19d10005-e8f2-537e-4f6c-d104768a1214";
-const char* mappingCharacteristicUuid = "19d10005-e8f2-537e-4f6c-d104768a1214";
+const char* mappingCharacteristicUuid = "19d10006-e8f2-537e-4f6c-d104768a1214";
 
 BLEService scoutService(scoutServiceUuid); // BLE Service
 BLEByteCharacteristic statusCharacteristic(scoutServiceCharacteristicUuid, BLERead | BLEWrite | BLENotify);
@@ -259,7 +259,7 @@ void setup() {
     BLE.setAdvertisedService(scoutService);
 
     // add the characteristic to the service
-    scoutService.addCharacteristic(statusCharacteristic);
+    //scoutService.addCharacteristic(statusCharacteristic);
     scoutService.addCharacteristic(xposCharacteristic);
     scoutService.addCharacteristic(yposCharacteristic);
     scoutService.addCharacteristic(directionCharacteristic);
@@ -349,20 +349,20 @@ void sendPosition() {
 }
 
 void sendMapping() {
-  /*byte toSend = B00000000;
-  if (isScout) {
+  byte toSend = B00000000;
+  if (atIntersection) {
     toSend = toSend | B00000001;
   }
-  if (onWhiteLine) {
+  if (atRight) {
     toSend = toSend | B00000010;
   }
-  if (atIntersection) {
+  if (atLeft) {
     toSend = toSend | B00000100;
   }
-  if (atRight) {
+  if (atExit) {
     toSend = toSend | B00001000;
   }
-  if (atLeft) {
+  if (travelledUnitLength) {
     toSend = toSend | B00010000;
   }
   if (IsForward) {
@@ -371,10 +371,7 @@ void sendMapping() {
   if (atDeadEnd) {
     toSend = toSend | B01000000;
   }
-  if (atExit) {
-    toSend = toSend | B10000000;
-  }
-  statusCharacteristic.writeValue(toSend); */
+  mappingCharacteristic.writeValue(toSend);
 }
 
 
@@ -391,6 +388,8 @@ void MazeMapping(int* MazeX, int* MazeY, char Direction, bool atIntersection, bo
    */
 
   sendPosition();
+  sendMapping();
+  
   
   // Adjust X and Y Coordinates to the new posiotion
   switch (Direction){ 
