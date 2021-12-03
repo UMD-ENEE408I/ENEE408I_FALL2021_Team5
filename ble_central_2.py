@@ -86,7 +86,13 @@ def pos_decode(xpos, ypos, direction):
 
     
     toReturn = "FACE: "
-    toReturn += str(direction)
+    if (direction == 0x00):
+        toReturn += "N\t"
+    elif (direction == 0x01):
+        toReturn += "S\t"
+    elif (direction == 0x10):
+        toReturn += "E\t"
+    else: toReturn += "W\t"
 
     """ if (xpos & 0B00000000 == 0B00000000):
         toReturn += "N\t"
@@ -150,7 +156,7 @@ async def run():
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
                     ypos = int.from_bytes(await client.read_gatt_char(YPOS_CHAR_UUID), "little")
-                    direction = int.from_bytes(await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
+                    direction = (await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
                     print(pos_decode(xpos, ypos, direction))
 
                     # check if scout1 performed command
