@@ -48,7 +48,7 @@ MazeY = 25
 prevMazeX = 25
 prevMazeY = 25
 
-Turn_Count = 0
+Move_Count = 0
 
 # N = 0, S = 1, E = 16, W = 17
 Direction = 0
@@ -60,6 +60,15 @@ atExit = False
 travelledUnitLength = False
 isForward = False
 atDeadEnd = False
+
+#Previous 
+prevatIntersection = False
+prevatRight = False
+prevatLeft = False
+prevatExit = False
+prevtravelledUnitLength = False
+previsForward = False
+prevatDeadEnd = False
 
 #__________________________________JACK'S MAZE MAPPING___________________
 
@@ -232,8 +241,11 @@ def status_decode(val):
     else: 
         #toReturn += "!atIntersection\t"
         atIntersection = False
-    #if (val & 0B00000010 == 0B00000010):
+    if (val & 0B00000010 == 0B00000010):
         #toReturn += "onWhiteLine\t"
+        travelledUnitLength = True
+    else:
+        travelledUnitLength = False
     #else: toReturn += "!onWhiteLine\t"
     #if (val & 0B00000001 == 0B00000001):
         #toReturn += "MODE: FOLLOWING\n"
@@ -397,6 +409,30 @@ async def run():
                         print("set mode scout")
                         scout1_is_command_issued = True
                         scout1_init = True """
+                        
+                    #Set Up previous Turn Infor
+                    global atIntersection
+                    global atRight
+                    global atLeft
+                    global atExit
+                    global isForward
+                    global atDeadEnd
+                    global travelledUnitLength
+                    
+                    global prevatIntersection
+                    prevatIntersection = atIntersection
+                    global prevatRight
+                    prevatRight = atRight
+                    global prevatLeft
+                    prevatLeft = atLeft
+                    global prevatExit
+                    prevatExit = atExit
+                    global previsForward
+                    previsForward = isForward
+                    global prevatDeadEnd
+                    prevatDeadEnd = atDeadEnd
+                    global prevtravelledUnitLength
+                    prevtravelledUnitLength = travelledUnitLength
 
                     # always decode status
                     status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
@@ -413,8 +449,37 @@ async def run():
                     global prevMazeX
                     global prevMazeY
                     global Direction
-                    prevMazeX = MazeX
-                    prevMazeY = MazeY
+                    global Move_Count
+                    
+                    if(Move_Count = 0):
+                        prevMazeX = MazeX
+                        prevMazeY = MazeY
+                    
+                    #Set Up previous Turn Infor
+                    global atIntersection
+                    global atRight
+                    global atLeft
+                    global atExit
+                    global isForward
+                    global atDeadEnd
+                    global travelledUnitLength
+                    
+                    global prevatIntersection
+                    prevatIntersection = atIntersection
+                    global prevatRight
+                    prevatRight = atRight
+                    global prevatLeft
+                    prevatLeft = atLeft
+                    global prevatExit
+                    prevatExit = atExit
+                    global previsForward
+                    previsForward = isForward
+                    global prevatDeadEnd
+                    prevatDeadEnd = atDeadEnd
+                    global prevtravelledUnitLength
+                    prevtravelledUnitLength = travelledUnitLength
+                    
+                    
 
                     MazeX = xpos
                     MazeY = ypos
@@ -439,27 +504,15 @@ async def run():
 
                     #
                     
-                    global Turn_Count
+                    global Move_Count
                      
                     
-                    #if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
-                    #if(Turn_Count == 0):
-                        #global atIntersection
-                        #global atRight
-                        #global atLeft
-                        #global atExit
-                        #global isForward
-                        #global atDeadEnd
-                            
-                            
-                    pos_print(MazeX, MazeY, Direction)
-                    mapTheMaze()
-
-
-                        #if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
-                            #Turn_Count = 0; 
-                        #else:
-                            #Turn_Count = 1
+                    if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
+                        Move_Count = 1
+                         if(not(atIntersection == prevatIntersection) and not(atDeadEnd == prevatDeadEnd) and not(atRight == prevatRight) and not(atLeft == prevatLeft) and not(atExit == prevatExit) and not(travelledUnitLength == prevtravelledUnitLength)):    
+                            Move_Count = 0
+                            pos_print(MazeX, MazeY, Direction)
+                            mapTheMaze()
                     
 
     if not found:
