@@ -302,16 +302,17 @@ def pos_decode(xpos, ypos, dir):
     toReturn += "ypos: "
     toReturn += str(ypos) #int.from_bytes(ypos)
 
+    global MazeX
+    global MazeY
+    
     global prevMazeX
     prevMazeX = MazeX
     
-    global MazeX
     MazeX = xpos
 
     global prevMazeY
     prevMazeY = MazeY
 
-    global MazeY
     MazeY = ypos
 
     global Direction
@@ -354,8 +355,6 @@ async def run():
             async with BleakClient(d.address) as client:
                 print(f'Connected to {d.address}')
                 while True:
-                    global MazeX
-                    global MazeY
 
                     # issue initial mode to peripheral ONCE
                     """ if (not scout1_init):
