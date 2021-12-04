@@ -35,7 +35,7 @@ DIRECTION_CHAR_UUID = '19d10005-e8f2-537e-4f6c-d104768a1214'
 MAPPING_CHAR_UUID = '19d10006-e8f2-537e-4f6c-d104768a1214'
 
 scout1_init = False
-DEBUG_PRINT_STATUS = False # print out the status every time
+DEBUG_PRINT_STATUS = True # print out the status every time
 DEBUG_POS_DECODE_DIRECTION = True
 DEBUG_MAP_BOOLEANS = True # print out map booleans
 DEBUG_MAPPING_DECODE = True # print out the mapping byte received
