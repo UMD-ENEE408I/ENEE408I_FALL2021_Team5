@@ -443,23 +443,23 @@ async def run():
                      
                     
                     #if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
-                    if(Turn_Count == 0):
-                        global atIntersection
-                        global atRight
-                        global atLeft
-                        global atExit
-                        global isForward
-                        global atDeadEnd
+                    #if(Turn_Count == 0):
+                        #global atIntersection
+                        #global atRight
+                        #global atLeft
+                        #global atExit
+                        #global isForward
+                        #global atDeadEnd
                             
                             
-                        pos_print(MazeX, MazeY, Direction)
-                        mapTheMaze()
+                    pos_print(MazeX, MazeY, Direction)
+                    mapTheMaze()
 
 
-                        if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
-                            Turn_Count = 0; 
-                        else:
-                            Turn_Count = 1
+                        #if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
+                            #Turn_Count = 0; 
+                        #else:
+                            #Turn_Count = 1
                     
 
     if not found:
