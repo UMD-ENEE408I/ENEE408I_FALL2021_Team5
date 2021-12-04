@@ -442,7 +442,7 @@ async def run():
                     global Turn_Count
                      
                     
-                    if ((MazeX == prevMazeX) or (MazeY == prevMazeY)):
+                    if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
                         if(Turn_Count == 0):
                             global atIntersection
                             global atRight
@@ -463,10 +463,10 @@ async def run():
                             atDeadEnd = False
 
 
-                    if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
-                        Turn_Count = 0; 
-                    else:
-                        Turn_Count = 1
+                        if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
+                            Turn_Count = 0; 
+                        else:
+                            Turn_Count = 1
                     
 
     if not found:
