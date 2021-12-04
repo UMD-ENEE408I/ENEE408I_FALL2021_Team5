@@ -434,7 +434,7 @@ async def run():
 
                     #
                     
-                    if ((MazeX != prevMazeX) or (MazeY != prevMazeY)):
+                    if (not (MazeX == prevMazeX) or not (MazeY == prevMazeY)):
                         global atIntersection
                         global atRight
                         global atLeft
