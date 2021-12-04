@@ -44,6 +44,8 @@ COL = 50
 
 MazeX = 25 
 MazeY = 25 
+prevMazeX
+prevMazeY
 # N = 0, S = 1, E = 16, W = 17
 Direction = 0
 
@@ -135,7 +137,7 @@ def mapTheMaze():
     for r in MazeMap:
         for c in r:
             print(c,end = " ")
-    print()  
+        print()  
 
 #_______
 
@@ -317,11 +319,11 @@ async def run():
                     mapping_decode(mapping_val)
 
                     # check if scout1 performed command
-                    """ if (scout1_is_command_issued):
+                    if (scout1_is_command_issued):
                         val = await client.read_gatt_char(COMMAND_CHAR_UUID, "little")
                         if (is_command_executed(val)):
                             scout1_is_command_issued = False
- """
+ 
                     # 
                     
                     # send instruction on condition
