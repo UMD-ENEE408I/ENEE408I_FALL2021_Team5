@@ -39,6 +39,7 @@ DEBUG_PRINT_STATUS = False # print out the status every time
 DEBUG_POS_DECODE_DIRECTION = True
 DEBUG_MAP_BOOLEANS = True # print out map booleans
 DEBUG_MAPPING_DECODE = True # print out the mapping byte received
+DECODE_MAPPING_CHARACTERISTIC = False
 scout1_curr_command = 0B00000000
 
 ROW = 50
@@ -184,27 +185,52 @@ class Command(Enum):
 
 
 def status_decode(val):
+    global atIntersection
+    global atRight
+    global atLeft
+    global atExit
+    global travelledUnitLength
+    global isForward
+    global atDeadEnd
+
     toReturn = ""
     #check mouse mode
     if (val & 0B10000000 == 0B10000000):
         toReturn += "atExit\t"
+        atExit = True
     else: 
         toReturn += "!atExit\t"
+        atExit = False
     if (val & 0B01000000 == 0B01000000):
         toReturn += "atDeadEnd\t"
-    else: toReturn += "!atDeadEnd\t"
+        atDeadEnd = True
+    else: 
+        toReturn += "!atDeadEnd\t"
+        toReturn = False
     if (val & 0B00100000 == 0B00100000):
         toReturn += "isForward\t"
-    else: toReturn += "!isForward\t"
+        isForward = True
+    else: 
+        toReturn += "!isForward\t"
+        isForward = False
     if (val & 0B00010000 == 0B00010000):
         toReturn += "atLeft\t"
-    else: toReturn += "!atLeft\t"
+        atLeft = True
+    else: 
+        toReturn += "!atLeft\t"
+        atLeft = False
     if (val & 0B00001000 == 0B00001000):
         toReturn += "atRight\t"
-    else: toReturn += "!atRight\t"
+        atRight = True
+    else: 
+        toReturn += "!atRight\t"
+        atRight = False
     if (val & 0B00000100 == 0B00000100):
         toReturn += "atIntersection\t"
-    else: toReturn += "!atIntersection\t"
+        atIntersection = True
+    else: 
+        toReturn += "!atIntersection\t"
+        atIntersection = False
     if (val & 0B00000010 == 0B00000010):
         toReturn += "onWhiteLine\t"
     else: toReturn += "!onWhiteLine\t"
@@ -222,28 +248,28 @@ def mapping_decode(val):
     global isForward
     global atDeadEnd
 
-    if (DEBUG_MAPPING_DECODE):
-        print(val)
+    #if (DEBUG_MAPPING_DECODE):
+        #print(val)
 
-    if (val & 0B00000001 == 0B00000001):
+    if ((val & 0B00000001) == 0B00000001):
         atIntersection = True
     else: atIntersection = False
-    if (val & 0B00000010 == 0x00000010):
+    if ((val & 0B00000010) == 0x00000010):
         atRight = True
     else: atRight = False
-    if (val & 0B00000100 == 0x00000100):
+    if ((val & 0B00000100) == 0x00000100):
         atLeft = True
     else: atLeft = False
-    if (val & 0B00001000 == 0x00001000):
+    if ((val & 0B00001000) == 0x00001000):
         atExit = True
     else: atExit = False
-    if (val & 0B00010000 == 0x00010000):
+    if ((val & 0B00010000) == 0x00010000):
         travelledUnitLength = True
     else: travelledUnitLength = False
-    if (val & 0B00100000 == 0x00100000):
+    if ((val & 0B00100000) == 0x00100000):
         isForward = True
     else: isForward = False
-    if (val & 0B01000000 == 0x01000000):
+    if ((val & 0B01000000) == 0x01000000):
         atDeadEnd = True
     else: atDeadEnd = False
 
@@ -333,9 +359,9 @@ async def run():
                         scout1_init = True """
 
                     # always decode status
-                    #status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
-                    #if (DEBUG_PRINT_STATUS):
-                        #print(status_decode(status_val))
+                    status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
+                    if (DEBUG_PRINT_STATUS):
+                        print(status_decode(status_val))
 
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
@@ -344,8 +370,9 @@ async def run():
                     print(pos_decode(xpos, ypos, direction))
 
                     # always decode mapping characteristic
-                    mapping_val = (await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
-                    mapping_decode(mapping_val)
+                    if (DECODE_MAPPING_CHARACTERISTIC):
+                        mapping_val = (await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
+                        mapping_decode(mapping_val)
 
                     # check if scout1 performed command
                     
