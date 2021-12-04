@@ -48,6 +48,8 @@ MazeY = 25
 prevMazeX = 25
 prevMazeY = 25
 
+Turn_Count = 0
+
 # N = 0, S = 1, E = 16, W = 17
 Direction = 0
 
@@ -437,25 +439,34 @@ async def run():
 
                     #
                     
+                    global Turn_Count
+                     
+                    
                     if ((MazeX == prevMazeX) or (MazeY == prevMazeY)):
-                        global atIntersection
-                        global atRight
-                        global atLeft
-                        global atExit
-                        global isForward
-                        global atDeadEnd
-                        
-                        
-                        pos_print(MazeX, MazeY, Direction)
-                        mapTheMaze()
+                        if(Turn_Count == 0):
+                            global atIntersection
+                            global atRight
+                            global atLeft
+                            global atExit
+                            global isForward
+                            global atDeadEnd
+                            
+                            
+                            pos_print(MazeX, MazeY, Direction)
+                            mapTheMaze()
 
-                        atIntersection = False
-                        atRight = False
-                        atLeft = False
-                        atExit = False
-                        isForward = False
-                        atDeadEnd = False
+                            atIntersection = False
+                            atRight = False
+                            atLeft = False
+                            atExit = False
+                            isForward = False
+                            atDeadEnd = False
 
+
+                    if((atIntersection == False) and (atRight == False) and (atLeft == false) and (atExit == false) and (atDeadEnd == False)):
+                        Turn_Count = 0; 
+                    else:
+                        Turn_Count = 1
                     
 
     if not found:
