@@ -27,7 +27,7 @@ from enum import Enum
 # These values have been randomly generated - they must match between the Central and Peripheral devices
 # Any changes you make here must be suitably made in the Arduino program as well
 
-#STATUS_CHAR_UUID = '19d10001-e8f2-537e-4f6c-d104768a1214'
+STATUS_CHAR_UUID = '19d10001-e8f2-537e-4f6c-d104768a1214'
 COMMAND_CHAR_UUID = '19d10002-e8f2-537e-4f6c-d104768a1214'
 XPOS_CHAR_UUID = '19d10003-e8f2-537e-4f6c-d104768a1214'
 YPOS_CHAR_UUID = '19d10004-e8f2-537e-4f6c-d104768a1214'
