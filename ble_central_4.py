@@ -188,7 +188,8 @@ def status_decode(val):
     #check mouse mode
     if (val & 0B10000000 == 0B10000000):
         toReturn += "atExit\t"
-    else: toReturn += "!atExit\t"
+    else: 
+        toReturn += "!atExit\t"
     if (val & 0B01000000 == 0B01000000):
         toReturn += "atDeadEnd\t"
     else: toReturn += "!atDeadEnd\t"
@@ -211,6 +212,40 @@ def status_decode(val):
         toReturn += "MODE: FOLLOWING\n"
     else: toReturn += "MODE: SCOUT\n"
     return toReturn
+
+def mapping_decode(val):
+    global atIntersection
+    global atRight
+    global atLeft
+    global atExit
+    global travelledUnitLength
+    global isForward
+    global atDeadEnd
+
+    if (DEBUG_MAPPING_DECODE):
+        print(bytes(val))
+
+    if (val & 0B00000001 == 0B00000001):
+        atIntersection = True
+    else: atIntersection = False
+    if (val & 0B00000010 == 0x00000010):
+        atRight = True
+    else: atRight = False
+    if (val & 0B00000100 == 0x00000100):
+        atLeft = True
+    else: atLeft = False
+    if (val & 0B00001000 == 0x00001000):
+        atExit = True
+    else: atExit = False
+    if (val & 0B00010000 == 0x00010000):
+        travelledUnitLength = True
+    else: travelledUnitLength = False
+    if (val & 0B00100000 == 0x00100000):
+        isForward = True
+    else: isForward = False
+    if (val & 0B01000000 == 0x01000000):
+        atDeadEnd = True
+    else: atDeadEnd = False
 
 def pos_decode(xpos, ypos, dir):
 
@@ -272,39 +307,7 @@ def is_command_executed(val):
 def encode_command(com):
     return bin(com)
 
-def mapping_decode(val):
-    global atIntersection
-    global atRight
-    global atLeft
-    global atExit
-    global travelledUnitLength
-    global isForward
-    global atDeadEnd
 
-    if (DEBUG_MAPPING_DECODE):
-        print(bytes(val))
-
-    if (val & 0B00000001 == 0B00000001):
-        atIntersection = True
-    else: atIntersection = False
-    if (val & 0B00000010 == 0x00000010):
-        atRight = True
-    else: atRight = False
-    if (val & 0B00000100 == 0x00000100):
-        atLeft = True
-    else: atLeft = False
-    if (val & 0B00001000 == 0x00001000):
-        atExit = True
-    else: atExit = False
-    if (val & 0B00010000 == 0x00010000):
-        travelledUnitLength = True
-    else: travelledUnitLength = False
-    if (val & 0B00100000 == 0x00100000):
-        isForward = True
-    else: isForward = False
-    if (val & 0B01000000 == 0x01000000):
-        atDeadEnd = True
-    else: atDeadEnd = False
 
 async def run():
 
@@ -341,7 +344,7 @@ async def run():
                     print(pos_decode(xpos, ypos, direction))
 
                     # always decode mapping characteristic
-                    mapping_val = int.from_bytes(await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
+                    mapping_val = (await client.read_gatt_char(MAPPING_CHAR_UUID), "little")
                     mapping_decode(mapping_val)
 
                     # check if scout1 performed command
