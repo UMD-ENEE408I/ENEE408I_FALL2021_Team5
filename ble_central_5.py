@@ -463,7 +463,7 @@ async def run():
                             atDeadEnd = False
 
 
-                    if((atIntersection == False) and (atRight == False) and (atLeft == false) and (atExit == false) and (atDeadEnd == False)):
+                    if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
                         Turn_Count = 0; 
                     else:
                         Turn_Count = 1
