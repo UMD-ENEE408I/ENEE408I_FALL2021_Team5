@@ -430,9 +430,12 @@ async def run():
                     # send instruction on condition
 
                     #
-                    if ((MazeX != prevMazeX) and (MazeY != prevMazeY)):
-                        pos_print(MazeX, MazeY, Direction)
-                        mapTheMaze()
+                    pos_print(MazeX, MazeY, Direction)
+                    mapTheMaze()
+                    
+                    #if ((MazeX != prevMazeX) and (MazeY != prevMazeY)):
+                        #pos_print(MazeX, MazeY, Direction)
+                        #mapTheMaze()
                     
 
     if not found:
