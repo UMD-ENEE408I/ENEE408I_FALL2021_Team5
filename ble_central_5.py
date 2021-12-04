@@ -454,32 +454,7 @@ async def run():
                     if(Move_Count == 0):
                         prevMazeX = MazeX
                         prevMazeY = MazeY
-                    
-                    #Set Up previous Turn Infor
-                    global atIntersection
-                    global atRight
-                    global atLeft
-                    global atExit
-                    global isForward
-                    global atDeadEnd
-                    global travelledUnitLength
-                    
-                    global prevatIntersection
-                    prevatIntersection = atIntersection
-                    global prevatRight
-                    prevatRight = atRight
-                    global prevatLeft
-                    prevatLeft = atLeft
-                    global prevatExit
-                    prevatExit = atExit
-                    global previsForward
-                    previsForward = isForward
-                    global prevatDeadEnd
-                    prevatDeadEnd = atDeadEnd
-                    global prevtravelledUnitLength
-                    prevtravelledUnitLength = travelledUnitLength
-                    
-                    
+
 
                     MazeX = xpos
                     MazeY = ypos
@@ -509,7 +484,7 @@ async def run():
                     
                     if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
                         Move_Count = 1
-                         if(not(atIntersection == prevatIntersection) and not(atDeadEnd == prevatDeadEnd) and not(atRight == prevatRight) and not(atLeft == prevatLeft)):
+                        if(not(atIntersection == prevatIntersection) and not(atDeadEnd == prevatDeadEnd) and not(atRight == prevatRight) and not(atLeft == prevatLeft)):
                             if(not(atExit == prevatExit) and not(travelledUnitLength == prevtravelledUnitLength)):    
                                 Move_Count = 0
                                 pos_print(MazeX, MazeY, Direction)
