@@ -36,7 +36,7 @@ MAPPING_CHAR_UUID = '19d10006-e8f2-537e-4f6c-d104768a1214'
 
 scout1_init = False
 DEBUG_PRINT_STATUS = True # print out the status every time
-DEBUG_POS_DECODE_DIRECTION = True
+DEBUG_POS_DECODE_DIRECTION = False
 DEBUG_MAP_BOOLEANS = True # print out map booleans
 DEBUG_MAPPING_DECODE = True # print out the mapping byte received
 DECODE_MAPPING_CHARACTERISTIC = False
@@ -175,6 +175,7 @@ on_value = bytearray([0x01])
 off_value = bytearray([0x00])
 
 class Command(Enum):
+    MOUSE_STOP = 0
     MOVE_FORWARD = 1
     TURN_LEFT = 2
     TURN_RIGHT = 3
@@ -277,6 +278,8 @@ def pos_print(xpos, ypos, dir):
 
     
     toReturn = "FACE: "
+    toReturn += str(dir)
+    toReturn += "\t"
 
     if (DEBUG_POS_DECODE_DIRECTION):
         toReturn += str(dir)
@@ -430,12 +433,10 @@ async def run():
                     # send instruction on condition
 
                     #
-                    pos_print(MazeX, MazeY, Direction)
-                    mapTheMaze()
                     
-                    #if ((MazeX != prevMazeX) and (MazeY != prevMazeY)):
-                        #pos_print(MazeX, MazeY, Direction)
-                        #mapTheMaze()
+                    if ((MazeX != prevMazeX) or (MazeY != prevMazeY)):
+                        pos_print(MazeX, MazeY, Direction)
+                        mapTheMaze()
                     
 
     if not found:
