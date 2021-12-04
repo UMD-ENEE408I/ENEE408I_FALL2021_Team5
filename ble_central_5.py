@@ -509,10 +509,11 @@ async def run():
                     
                     if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
                         Move_Count = 1
-                         if(not(atIntersection == prevatIntersection) and not(atDeadEnd == prevatDeadEnd) and not(atRight == prevatRight) and not(atLeft == prevatLeft) and not(atExit == prevatExit) and not(travelledUnitLength == prevtravelledUnitLength)):    
-                            Move_Count = 0
-                            pos_print(MazeX, MazeY, Direction)
-                            mapTheMaze()
+                         if(not(atIntersection == prevatIntersection) and not(atDeadEnd == prevatDeadEnd) and not(atRight == prevatRight) and not(atLeft == prevatLeft)):
+                            if(not(atExit == prevatExit) and not(travelledUnitLength == prevtravelledUnitLength)):    
+                                Move_Count = 0
+                                pos_print(MazeX, MazeY, Direction)
+                                mapTheMaze()
                     
 
     if not found:
