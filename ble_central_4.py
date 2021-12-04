@@ -273,6 +273,37 @@ def mapping_decode(val):
         atDeadEnd = True
     else: atDeadEnd = False
 
+def pos_print(xpos, ypos, dir):
+
+    
+    toReturn = "FACE: "
+
+    if (DEBUG_POS_DECODE_DIRECTION):
+        toReturn += str(dir)
+        toReturn += "\t"
+
+        #toReturn += str(direction)
+
+    """ if (direction == bytearray([int(0x00, 16)])):
+        toReturn += "N\t"
+    elif (direction == bytearray([int(0x01, 16)])):
+        toReturn += "S\t"
+    elif (direction == bytearray([int(0x10, 16)])):
+        toReturn += "E\t"
+    else: 
+        toReturn += "W\t" """
+
+
+    toReturn += "xpos: "
+    #xpos = xpos | 0B000000
+    toReturn += str(xpos) #int.from_bytes(xpos)
+    toReturn += "\t"
+
+    toReturn += "ypos: "
+    toReturn += str(ypos) #int.from_bytes(ypos)
+
+    print(toReturn)
+
 def pos_decode(xpos, ypos, dir):
 
     
@@ -318,7 +349,7 @@ def pos_decode(xpos, ypos, dir):
     global Direction
     Direction = dir
 
-    return toReturn
+    print(toReturn)
 
     
 """  if (int.from_bytes(bytes(direction), "little") == 0):
@@ -373,8 +404,14 @@ async def run():
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
                     ypos = int.from_bytes(await client.read_gatt_char(YPOS_CHAR_UUID), "little")
-                    direction = int.from_bytes(await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
-                    print(pos_decode(xpos, ypos, direction))
+                    dir = int.from_bytes(await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
+                    global MazeX
+                    global MazeY
+                    global Direction
+                    MazeX = xpos
+                    MazeY = ypos
+                    Direction = dir
+                    #pos_decode(xpos, ypos, direction)
 
                     # always decode mapping characteristic
                     if (DECODE_MAPPING_CHARACTERISTIC):
@@ -394,6 +431,7 @@ async def run():
 
                     #
                     if ((MazeX != prevMazeX) and (MazeY != prevMazeY)):
+                        pos_print(MazeX, MazeY, Direction)
                         mapTheMaze()
                     
 
