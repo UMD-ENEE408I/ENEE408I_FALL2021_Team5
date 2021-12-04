@@ -144,16 +144,16 @@ def mapTheMaze():
     if (DEBUG_MAP_BOOLEANS):
         toPrint = ""
         toPrint += "atIntersection: "
-        toPrint += atIntersection
+        toPrint += str(atIntersection)
         toPrint += "\t"
         toPrint += "atRight: "
-        toPrint += atRight
+        toPrint += str(atRight)
         toPrint += "\t"
         toPrint += "atLeft: "
-        toPrint += atLeft
+        toPrint += str(atLeft)
         toPrint += "\t"
         toPrint += "isForward: "
-        toPrint += isForward
+        toPrint += str(isForward)
         print(toPrint)
 
     for r in MazeMap:
