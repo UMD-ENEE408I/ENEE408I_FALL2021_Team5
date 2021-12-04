@@ -47,8 +47,8 @@ COL = 50
 
 MazeX = 25 
 MazeY = 25 
-#prevMazeX
-#prevMazeY
+prevMazeX = 25
+prevMazeY = 25
 
 # N = 0, S = 1, E = 16, W = 17
 Direction = 0
@@ -279,7 +279,6 @@ def pos_decode(xpos, ypos, dir):
     toReturn = "FACE: "
 
     if (DEBUG_POS_DECODE_DIRECTION):
-        toReturn += "DEBUG: FACE_VAL_RECEIVED = "
         toReturn += str(dir)
         toReturn += "\t"
 
@@ -303,8 +302,14 @@ def pos_decode(xpos, ypos, dir):
     toReturn += "ypos: "
     toReturn += str(ypos) #int.from_bytes(ypos)
 
+    global prevMazeX
+    prevMazeX = MazeX
+    
     global MazeX
     MazeX = xpos
+
+    global prevMazeY
+    prevMazeY = MazeY
 
     global MazeY
     MazeY = ypos
@@ -387,7 +392,8 @@ async def run():
                     # send instruction on condition
 
                     #
-                    mapTheMaze()
+                    if ((MazeX != prevMazeX) and (MazeY != prevMazeY)):
+                        mapTheMaze()
                     
 
     if not found:
