@@ -455,13 +455,6 @@ async def run():
                             pos_print(MazeX, MazeY, Direction)
                             mapTheMaze()
 
-                            atIntersection = False
-                            atRight = False
-                            atLeft = False
-                            atExit = False
-                            isForward = False
-                            atDeadEnd = False
-
 
                         if((atIntersection == False) and (atRight == False) and (atLeft == False) and (atExit == False) and (atDeadEnd == False)):
                             Turn_Count = 0; 
