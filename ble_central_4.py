@@ -282,7 +282,7 @@ def mapping_decode(val):
     global atDeadEnd
 
     if (DEBUG_MAPPING_DECODE):
-        print(val.decode("utf-8"))
+        print(bytes(val))
 
     if (val & 0B00000001 == 0B00000001):
         atIntersection = True
