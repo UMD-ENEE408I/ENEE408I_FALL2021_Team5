@@ -435,8 +435,24 @@ async def run():
                     #
                     
                     if ((MazeX != prevMazeX) or (MazeY != prevMazeY)):
+                        global atIntersection
+                        global atRight
+                        global atLeft
+                        global atExit
+                        global isForward
+                        global atDeadEnd
+                        
+                        
                         pos_print(MazeX, MazeY, Direction)
                         mapTheMaze()
+
+                        atIntersection = False
+                        atRight = False
+                        atLeft = False
+                        atExit = False
+                        isForward = False
+                        atDeadEnd = False
+
                     
 
     if not found:
