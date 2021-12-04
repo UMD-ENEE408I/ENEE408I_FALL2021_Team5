@@ -38,6 +38,7 @@ scout1_init = False
 DEBUG_PRINT_STATUS = False # print out the status every time
 DEBUG_POS_DECODE_DIRECTION = True
 DEBUG_MAP_BOOLEANS = True # print out map booleans
+DEBUG_MAPPING_DECODE = True # print out the mapping byte received
 scout1_curr_command = 0B00000000
 
 ROW = 50
@@ -279,6 +280,9 @@ def mapping_decode(val):
     global travelledUnitLength
     global isForward
     global atDeadEnd
+
+    if (DEBUG_MAPPING_DECODE):
+        print(val.decode("utf-8"))
 
     if (val & 0B00000001 == 0B00000001):
         atIntersection = True
