@@ -80,14 +80,14 @@ def mapTheMaze():
     #MazeMap[MazeX][MazeY] = "S"
 
     #Adjust X and Y Coordinates to the new posiotion
-    if (Direction == 0):
-        MazeY = MazeY - 1
-    elif (Direction == 1): 
-        MazeY = MazeY + 1; 
-    elif (Direction == 16):
-        MazeX = MazeX + 1;
-    elif (Direction == 17):
-        MazeX = MazeX - 1; 
+    #if (Direction == 0):
+        #MazeY = MazeY - 1
+    #elif (Direction == 1): 
+        #MazeY = MazeY + 1; 
+    #elif (Direction == 16):
+        #MazeX = MazeX + 1;
+    #elif (Direction == 17):
+        #MazeX = MazeX - 1; 
         
     MazeMap[MazeY][MazeX] = "T"
 
