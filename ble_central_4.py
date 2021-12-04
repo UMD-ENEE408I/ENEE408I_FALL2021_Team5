@@ -193,51 +193,51 @@ def status_decode(val):
     global isForward
     global atDeadEnd
 
-    toReturn = ""
+    #toReturn = ""
     #check mouse mode
     if (val & 0B10000000 == 0B10000000):
-        toReturn += "atExit\t"
+        #toReturn += "atExit\t"
         atExit = True
     else: 
-        toReturn += "!atExit\t"
+        #toReturn += "!atExit\t"
         atExit = False
     if (val & 0B01000000 == 0B01000000):
-        toReturn += "atDeadEnd\t"
+        #toReturn += "atDeadEnd\t"
         atDeadEnd = True
     else: 
-        toReturn += "!atDeadEnd\t"
+        #toReturn += "!atDeadEnd\t"
         toReturn = False
     if (val & 0B00100000 == 0B00100000):
-        toReturn += "isForward\t"
+        #toReturn += "isForward\t"
         isForward = True
     else: 
-        toReturn += "!isForward\t"
+        #toReturn += "!isForward\t"
         isForward = False
     if (val & 0B00010000 == 0B00010000):
-        toReturn += "atLeft\t"
+        #toReturn += "atLeft\t"
         atLeft = True
     else: 
-        toReturn += "!atLeft\t"
+        #toReturn += "!atLeft\t"
         atLeft = False
     if (val & 0B00001000 == 0B00001000):
-        toReturn += "atRight\t"
+        #toReturn += "atRight\t"
         atRight = True
     else: 
-        toReturn += "!atRight\t"
+        #toReturn += "!atRight\t"
         atRight = False
     if (val & 0B00000100 == 0B00000100):
-        toReturn += "atIntersection\t"
+        #toReturn += "atIntersection\t"
         atIntersection = True
     else: 
-        toReturn += "!atIntersection\t"
+        #toReturn += "!atIntersection\t"
         atIntersection = False
-    if (val & 0B00000010 == 0B00000010):
-        toReturn += "onWhiteLine\t"
-    else: toReturn += "!onWhiteLine\t"
-    if (val & 0B00000001 == 0B00000001):
-        toReturn += "MODE: FOLLOWING\n"
-    else: toReturn += "MODE: SCOUT\n"
-    return toReturn
+    #if (val & 0B00000010 == 0B00000010):
+        #toReturn += "onWhiteLine\t"
+    #else: toReturn += "!onWhiteLine\t"
+    #if (val & 0B00000001 == 0B00000001):
+        #toReturn += "MODE: FOLLOWING\n"
+    #else: toReturn += "MODE: SCOUT\n"
+    #return toReturn
 
 def mapping_decode(val):
     global atIntersection
@@ -361,7 +361,8 @@ async def run():
                     # always decode status
                     status_val = int.from_bytes(await client.read_gatt_char(STATUS_CHAR_UUID), "little")
                     if (DEBUG_PRINT_STATUS):
-                        print(status_decode(status_val))
+                        #print(status_decode(status_val))
+                        status_decode(status_val)
 
                     # always decode position
                     xpos = int.from_bytes(await client.read_gatt_char(XPOS_CHAR_UUID), "little")
