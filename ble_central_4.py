@@ -37,6 +37,7 @@ MAPPING_CHAR_UUID = '19d10006-e8f2-537e-4f6c-d104768a1214'
 scout1_init = False
 DEBUG_PRINT_STATUS = False # print out the status every time
 DEBUG_POS_DECODE_DIRECTION = True
+DEBUG_MAP_BOOLEANS = True # print out map booleans
 scout1_curr_command = 0B00000000
 
 ROW = 50
@@ -67,6 +68,11 @@ def mapTheMaze():
 
     global MazeX
     global MazeY
+
+    global atIntersection
+    global atRight
+    global atLeft
+    global isForward
 
     #MazeMap =[["X" for i in range (ROW)] for i in range (COL)]
     #MazeMap[MazeX][MazeY] = "S"
@@ -135,6 +141,20 @@ def mapTheMaze():
     elif (atExit == True):
         MazeMap[MazeY][MazeX] = "E"; 
         
+    if (DEBUG_MAP_BOOLEANS):
+        print("atIntersection: ")
+        print(str(atIntersection))
+        print("\t")
+        print("atRight: ")
+        print(str(atRight))
+        print("\t")
+        print("atLeft: ")
+        print(str(atLeft))
+        print("\t")
+        print("isForward: ")
+        print(str(isForward))
+        print("\n")
+
     for r in MazeMap:
         for c in r:
             print(c,end = " ")
