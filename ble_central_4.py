@@ -310,7 +310,7 @@ def pos_print(xpos, ypos, dir):
 def pos_decode(xpos, ypos, dir):
 
     
-    toReturn = "FACE: "
+    #toReturn = "FACE: "
 
     if (DEBUG_POS_DECODE_DIRECTION):
         toReturn += str(dir)
@@ -328,13 +328,13 @@ def pos_decode(xpos, ypos, dir):
         toReturn += "W\t" """
 
 
-    toReturn += "xpos: "
+    #toReturn += "xpos: "
     #xpos = xpos | 0B000000
-    toReturn += str(xpos) #int.from_bytes(xpos)
-    toReturn += "\t"
+    #toReturn += str(xpos) #int.from_bytes(xpos)
+    #toReturn += "\t"
 
-    toReturn += "ypos: "
-    toReturn += str(ypos) #int.from_bytes(ypos)
+    #toReturn += "ypos: "
+    #toReturn += str(ypos) #int.from_bytes(ypos)
 
     global MazeX
     global MazeY
@@ -349,10 +349,10 @@ def pos_decode(xpos, ypos, dir):
 
     MazeY = ypos
 
-    global Direction
-    Direction = dir
+    #global Direction
+    #Direction = dir
 
-    print(toReturn)
+    #print(toReturn)
 
     
 """  if (int.from_bytes(bytes(direction), "little") == 0):
@@ -410,7 +410,12 @@ async def run():
                     dir = int.from_bytes(await client.read_gatt_char(DIRECTION_CHAR_UUID), "little")
                     global MazeX
                     global MazeY
+                    global prevMazeX
+                    global prevMazeY
                     global Direction
+                    prevMazeX = MazeX
+                    prevMazeY = MazeY
+
                     MazeX = xpos
                     MazeY = ypos
                     Direction = dir
