@@ -142,18 +142,19 @@ def mapTheMaze():
         MazeMap[MazeY][MazeX] = "E"; 
         
     if (DEBUG_MAP_BOOLEANS):
-        print("atIntersection: ")
-        print(str(atIntersection))
-        print("\t")
-        print("atRight: ")
-        print(str(atRight))
-        print("\t")
-        print("atLeft: ")
-        print(str(atLeft))
-        print("\t")
-        print("isForward: ")
-        print(str(isForward))
-        print("\n")
+        toPrint = ""
+        toPrint += "atIntersection: "
+        toPrint += atIntersection
+        toPrint += "\t"
+        toPrint += "atRight: "
+        toPrint += atRight
+        toPrint += "\t"
+        toPrint += "atLeft: "
+        toPrint += atLeft
+        toPrint += "\t"
+        toPrint += "isForward: "
+        toPrint += isForward
+        print(toPrint)
 
     for r in MazeMap:
         for c in r:
