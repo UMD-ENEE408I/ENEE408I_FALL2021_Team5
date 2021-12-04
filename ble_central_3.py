@@ -44,8 +44,9 @@ COL = 50
 
 MazeX = 25 
 MazeY = 25 
-prevMazeX
-prevMazeY
+#prevMazeX
+#prevMazeY
+
 # N = 0, S = 1, E = 16, W = 17
 Direction = 0
 
