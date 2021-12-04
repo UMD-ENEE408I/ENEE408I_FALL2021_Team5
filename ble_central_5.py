@@ -451,7 +451,7 @@ async def run():
                     global Direction
                     global Move_Count
                     
-                    if(Move_Count = 0):
+                    if(Move_Count == 0):
                         prevMazeX = MazeX
                         prevMazeY = MazeY
                     
