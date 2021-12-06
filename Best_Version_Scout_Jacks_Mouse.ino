@@ -1121,7 +1121,7 @@ void loop() {
             atIntersection = true;
             endchecks = endchecks + 1;
           }
-          if (endchecks >= 20) {
+          if (endchecks >= 10) {
             mouse_stop();
             for (int i = 0; i < 10; i++) {
               tone(BUZZ, 3000 + (i * 200), 100);
@@ -1294,9 +1294,9 @@ void loop() {
             MAZE_UNIT_LENGTH = FULL_UNIT_LENGTH;
             Serial.println();
             mouse_stop();
-            delay(1000);
-            tone(BUZZ, 5400, 100); //play sound to denote MAZE_UNIT_LENGTH travelled
-            delay(100);
+            delay(500);
+            //tone(BUZZ, 5400, 100); //play sound to denote MAZE_UNIT_LENGTH travelled
+            //delay(100);
             Serial.print("Travelled Unit Length...Do something with this fact!");
             Serial.println();
             enc_set = false;
