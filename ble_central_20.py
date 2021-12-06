@@ -522,16 +522,16 @@ async def run():
             found = True
             async with BleakClient(d.address) as client:
                 print(f'Connected to {d.address}')
-                    if (atExit == False):
-                        while True:
+                if (atExit == False):
+                    while True:
 
                         # issue initial mode to peripheral ONCE
-                        """ if (not scout1_init):
-                            scout1_curr_command = encode_command(Command.SET_MODE_SCOUT)
-                            await client.write_gatt_char(COMMAND_CHAR_UUID, scout1_curr_command, False)
-                            print("set mode scout")
-                            scout1_is_command_issued = True
-                            scout1_init = True """
+                        # if (not scout1_init):
+                        #   scout1_curr_command = encode_command(Command.SET_MODE_SCOUT)
+                        #   await client.write_gatt_char(COMMAND_CHAR_UUID, scout1_curr_command, False)
+                        #   print("set mode scout")
+                        #   scout1_is_command_issued = True
+                        #  scout1_init = True """
                             
                         #Set Up previous Turn Infor
                         global atIntersection
@@ -602,15 +602,15 @@ async def run():
                     #
                     
                      
-                    if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
-                        mapPosition()
-                    
-                    if((atIntersection == False) and (atDeadEnd == False) and (atRight == False) and (atLeft == False) and (atExit == False)): 
-                        pos_print(MazeX, MazeY, Direction)
-                        mapTheMaze()
-                    elif(not(atIntersection == prevatIntersection) or not(atRight == prevatRight) or not(atLeft == prevatLeft) or not(atExit == prevatExit)):
-                        pos_print(MazeX, MazeY, Direction)
-                        mapTheMaze()
+                        if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
+                            mapPosition()
+                        
+                        if((atIntersection == False) and (atDeadEnd == False) and (atRight == False) and (atLeft == False) and (atExit == False)): 
+                            pos_print(MazeX, MazeY, Direction)
+                            mapTheMaze()
+                        elif(not(atIntersection == prevatIntersection) or not(atRight == prevatRight) or not(atLeft == prevatLeft) or not(atExit == prevatExit)):
+                            pos_print(MazeX, MazeY, Direction)
+                            mapTheMaze()
                         
                        
                 else:
