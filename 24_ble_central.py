@@ -215,6 +215,10 @@ def mapTheMaze():
         #MazeX = MazeX - 1; 
         
     MazeMap[MazeY][MazeX] = "T"
+    
+    #Exit
+    if (atExit == True):
+        MazeMap[MazeY][MazeX] = "E"; 
 
     #Intersection
     if(atIntersection == True): 
@@ -264,9 +268,6 @@ def mapTheMaze():
         #elif (Direction == 17):
             #MazeMap[(MazeY)][(MazeX)-1] = "T"; #Set IsNode field to the Right to True  
 
-    #Exit
-    elif (atExit == True):
-        MazeMap[MazeY][MazeX] = "E"; 
         
     if (DEBUG_MAP_BOOLEANS):
         toPrint = ""
