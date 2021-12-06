@@ -7,7 +7,7 @@
   This code receives a byte from the mouse, decodes it, and prints it
  */
 """
-
+from collections import deque as queue 
 
 import logging
 import asyncio
@@ -182,7 +182,7 @@ def BFS(grid, vis, row, col):
 
 #__________________________________JACK'S MAZE MAPPING___________________
 
-MazeMap =[["X" for i in range (ROW)] for i in range (COL)]
+MazeMap =[["-" for i in range (ROW)] for i in range (COL)]
 MazeMap[MazeY][MazeX] = "S"
 
 def mapPosition():
