@@ -658,7 +658,7 @@ async def run():
                         global Direction
                         Direction = 0 #0= N, 1=S, 16=E, 17 = W
                         
-                        for r in range(length)
+                        for r in range(length):
                             Command_Array = [0 for i in range (length)] 
                         
                         Command_Counter = 0; 
