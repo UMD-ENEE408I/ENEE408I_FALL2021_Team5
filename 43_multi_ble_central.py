@@ -818,9 +818,8 @@ async def run():
                     while True:
                         print("inside while true")
                         # check instruction
-                        val = (await client.read_gatt_char(COMMAND_CHAR_UUID), "little")
-                        print(val)
-                        if (is_command_empty(val)):
+                        val = int.from_bytes(await client.read_gatt_char(COMMAND_CHAR_UUID), "little")
+                        if (val == 0):
                             print("command is empty")
                             for r in range(Command_Counter):
                                 print("encoding a command")
