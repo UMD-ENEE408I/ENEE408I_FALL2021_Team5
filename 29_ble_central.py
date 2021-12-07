@@ -718,7 +718,7 @@ async def run():
                                             Direction = 1                              #Heading West After Turn
                                             Command_Counter = Command_Counter + 1       #Increment Command Counter
                                         elif((path_Start2Exit[r] - path_Start2Exit[r+1]) == 50):
-                                            Command_Array[Command_Counter] = 2          #Take a Right Turn
+                                            Command_Array[Command_Counter] = 3          #Take a Right Turn
                                             Direction = 0                               #Heading East After Turn 
                                             Command_Counter = Command_Counter + 1       #Increment Command Counter
                                         else: 
@@ -726,7 +726,7 @@ async def run():
                                             Direction = 17                               #Direction Stays South
                                             Command_Counter = Command_Counter + 1       #Increment Command Counter
                                             
-                        Command_Array[Command_Counter] = 0
+                        Command_Array[Command_Counter-1] = 0
                         
                         print("\nShow Command Array:\n");
                         for r in range(Command_Counter):
