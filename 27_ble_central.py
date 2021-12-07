@@ -666,7 +666,7 @@ async def run():
                         for r in range(length):
                             
                             
-                            Y = (path_Start2Exit)[r])//ROW  
+                            Y = (path_Start2Exit[r])//ROW  
                             X = (path_Start2Exit[r])%ROW
                             
                             if((Direction == 0) or (Direction == 1)):
