@@ -607,6 +607,18 @@ async def run():
                      
                         if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
                             mapPosition()
+                            if((MazeY - prevMazeY) == -2):
+                                MazeMap[MazeY+1][MazeX] = "T"
+                            if((MazeY - prevMazeY) == 2): 
+                                MazeMap[MazeY-1][MazeX] = "T" 
+                            if((MazeX - prevMazeX) == -2):
+                                MazeMap[MazeY][MazeX+1] = "T"
+                            if((MazeX - prevMazeX) == 2): 
+                                MazeMap[MazeY][MazeX-1] = "T"
+                        
+                        if((atIntersection == False) and (atDeadEnd == False) and (atRight == False) and (atLeft == False) and (atExit == False)): 
+                            pos_print(MazeX, MazeY, Direction)
+                            mapTheMaze()
                             if((MazeY - prevMazeY_2) == -2):
                                 MazeMap[MazeY+1][MazeX] = "T"
                             if((MazeY - prevMazeY_2) == 2): 
@@ -617,19 +629,6 @@ async def run():
                                 MazeMap[MazeY][MazeX-1] = "T"
                             prevMazeX_2 = MazeX
                             preMazeY_2 = MazeY
-                        
-                        if((atIntersection == False) and (atDeadEnd == False) and (atRight == False) and (atLeft == False) and (atExit == False)): 
-                            pos_print(MazeX, MazeY, Direction)
-                            mapTheMaze()
-                            if((MazeY - prevMazeY) == -2):
-                                MazeMap[MazeY+1][MazeX] = "T"
-                            if((MazeY - prevMazeY) == 2): 
-                                MazeMap[MazeY-1][MazeX] = "T" 
-                            if((MazeX - prevMazeX) == -2):
-                                MazeMap[MazeY][MazeX+1] = "T"
-                            if((MazeX - prevMazeX) == 2): 
-                                MazeMap[MazeY][MazeX-1] = "T"
-                            
                             
                         elif(not(atIntersection == prevatIntersection) or not(atRight == prevatRight) or not(atLeft == prevatLeft) or not(atExit == prevatExit)):
                             pos_print(MazeX, MazeY, Direction)
