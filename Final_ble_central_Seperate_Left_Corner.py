@@ -607,6 +607,16 @@ async def run():
                      
                         if (not(MazeX == prevMazeX) or not(MazeY == prevMazeY)):
                             mapPosition()
+                            if((MazeY - prevMazeY_2) == -2):
+                                MazeMap[MazeY+1][MazeX] = "T"
+                            if((MazeY - prevMazeY_2) == 2): 
+                                MazeMap[MazeY-1][MazeX] = "T" 
+                            if((MazeX - prevMazeX_2) == -2):
+                                MazeMap[MazeY][MazeX+1] = "T"
+                            if((MazeX - prevMazeX_2) == 2): 
+                                MazeMap[MazeY][MazeX-1] = "T"
+                            prevMazeX_2 = MazeX
+                            preMazeY_2 = MazeY
                         
                         if((atIntersection == False) and (atDeadEnd == False) and (atRight == False) and (atLeft == False) and (atExit == False)): 
                             pos_print(MazeX, MazeY, Direction)
