@@ -44,7 +44,7 @@ ROW = 50
 COL = 50
 
 MazeX_Start = 44
-MazeY_Start = 49
+MazeY_Start = 44
 MazeX = MazeX_Start
 MazeY = MazeY_Start
 prevMazeX = MazeX_Start
