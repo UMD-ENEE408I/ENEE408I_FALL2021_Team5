@@ -1222,7 +1222,7 @@ void loop() {
 
       // if the remote device wrote to the characteristic,
 
-      mouseDataCharacteristic.writeValue(0);
+      //mouseDataCharacteristic.writeValue(0);
      
     }
 
